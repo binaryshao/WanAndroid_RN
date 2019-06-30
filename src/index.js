@@ -12,7 +12,7 @@ const Main = createDrawerNavigator(
     {
         home: {
             screen: MainPage,
-            navigationOptions:{
+            navigationOptions: {
                 drawerLockMode: "unlocked",
             }
         }
@@ -23,11 +23,14 @@ const Main = createDrawerNavigator(
         contentComponent: DrawerPage,
         drawerLockMode: "locked-open",
         initialRouteName: 'home',
-        contentOptions: {}
+        contentOptions: {},
+        navigationOptions: {
+            title: "WanAndroid",
+        }
     });
 
 const pages = {
-    Home: {screen: Main, navigationOptions: () => ({header: null})},
+    Home: {screen: Main, navigationOptions: () => ({})},
     Web: {screen: WebPage, navigationOptions: () => ({header: null})},
     Knowledge: {screen: KnowledgePage, navigationOptions: () => ({header: null})},
     Login: {screen: LoginPage, navigationOptions: () => ({header: null})},
