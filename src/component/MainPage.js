@@ -6,6 +6,7 @@ import WeChatPage from "./WeChatPage";
 import ProjectPage from "./ProjectPage";
 import NavigationPage from "./NavigationPage";
 import KnowledgeTreePage from "./KnowledgeTreePage";
+import * as config from "../config";
 
 export default createBottomTabNavigator({
         Home: {
@@ -73,11 +74,14 @@ export default createBottomTabNavigator({
         lazy: true,
         backBehavior: "none",
         tabBarOptions: {
-            inactiveTintColor: "#666666",
-            activeTintColor: "#2196F3",
+            inactiveTintColor: "grey",
+            activeTintColor: config.colorPrimary,
             labelStyle: {
                 fontSize: 14,
-            }
+            },
+            tabStyle: {
+                paddingBottom: 2,
+            },
         }
     });
 
@@ -85,6 +89,6 @@ export default createBottomTabNavigator({
 const styles = StyleSheet.create({
     tabBar: {
         width: 25,
-        height: 25
+        height: 25,
     }
 });
