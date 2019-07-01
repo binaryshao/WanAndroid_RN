@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, Platform, StyleSheet, TouchableNativeFeedback, ToastAndroid} from 'react-native';
+import {Text, View, Image, Platform, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {UltimateListView} from "react-native-ultimate-listview";
 import Swiper from 'react-native-swiper';
 import * as config from "../config";
@@ -9,6 +9,7 @@ import ErrorView from "../widget/ErrorView";
 import LoadingView from "../widget/LoadingView";
 import HttpUtils from "../http/HttpUtils";
 import ArticleItemView from "../widget/ArticleItemView"
+import HintUtils from "../utils/HintUtils";
 
 export default class App extends React.Component {
 
@@ -108,7 +109,7 @@ export default class App extends React.Component {
                             this.state.bannerData.map((value, i) => <TouchableNativeFeedback
                                 key={'index' + i}
                                 onPress={() => {
-                                    ToastAndroid.show(value.title, ToastAndroid.SHORT);
+                                    HintUtils.toast(value.title);
                                 }}>
                                 <Image resizeMode='stretch' style={{flex: 1}} source={{uri: value.imagePath}}/>
                             </TouchableNativeFeedback>)
