@@ -16,15 +16,14 @@ export default class App extends PureComponent {
                 <Text style={[styles.normalText, {color: 'red', marginLeft: 5}]}>
                     {this.props.item.isTop ? "置顶" : ""}
                 </Text>
-                <View style={{flex: 1}}/>
-                <Text style={[styles.normalText]}>
+                <Text style={[styles.normalText, {flex: 1, textAlign: 'right'}]}>
                     {this.props.item.niceDate}
                 </Text>
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
                 {this.getImage()}
-                <View style={{flex: 1, justifyContent: "center"}}>
-                    <Text style={styles.title}>
+                <View style={{flex: 1}}>
+                    <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>
                         {this.props.item.title}
                     </Text>
                     {this.getDesc()}
@@ -49,7 +48,7 @@ export default class App extends PureComponent {
 
     getDesc() {
         if (this.props.item.desc) {
-            return <Text style={[styles.normalText, {marginTop: 10}]}>
+            return <Text style={[styles.normalText, {marginTop: 10}]} numberOfLines={3} ellipsizeMode={'tail'}>
                 {this.props.item.desc}
             </Text>;
         } else {
@@ -74,6 +73,5 @@ const styles = StyleSheet.create({
     title: {
         color: config.textColorPrimary,
         fontSize: 16,
-        flex: 1,
     }
 });
