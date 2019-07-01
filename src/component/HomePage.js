@@ -1,6 +1,7 @@
 import React from 'react';
-import {Text, View, Platform} from 'react-native';
+import {Text, View, Image, Platform, StyleSheet, TouchableNativeFeedback, ToastAndroid} from 'react-native';
 import {UltimateListView} from "react-native-ultimate-listview";
+import Swiper from 'react-native-swiper';
 import * as config from "../config";
 import LineDivider from "../widget/LineDivider";
 import EmptyView from "../widget/EmptyView";
@@ -9,6 +10,8 @@ import LoadingView from "../widget/LoadingView";
 import HttpUtils from "../http/HttpUtils";
 import ArticleItemView from "../widget/ArticleItemView"
 
+const bannerHeight = 180;
+const bannerHintHeight = 30;
 export default class App extends React.Component {
 
     constructor(props) {
@@ -17,7 +20,9 @@ export default class App extends React.Component {
             isLoading: true,
             error: false,
             errorInfo: "",
-            pageNO: 0
+            pageNo: 0,
+            bannerData: [],
+            bannerIndex: 0
         };
         this.getData = this.getData.bind(this);
     }
@@ -46,7 +51,7 @@ export default class App extends React.Component {
             separator={this.separator.bind(this)}
             firstLoader={false}
             keyExtractor={(item, index) => `${index} - ${item}`}
-            waitingSpinnerText={''}
+            waitingSpinnerText={config.LOADING}
             allLoadedText={config.NO_MORE_DATA}
             refreshableTitlePull={config.PULL_TO_REFRESH}
             refreshableTitleRelease={config.RELEASE_TO_REFRESH}
@@ -57,12 +62,12 @@ export default class App extends React.Component {
 
     getData(page, postRefresh, endFetch) {
         if (page === 1) {
-            this.state.pageNO = 0;
+            this.state.pageNo = 0;
         }
-        HttpUtils.get("article/list/" + this.state.pageNO + "/json", null, result => {
+        HttpUtils.get("article/list/" + this.state.pageNo + "/json", null, result => {
             this.setState({
                 isLoading: false,
-                pageNO: this.state.pageNO + 1
+                pageNo: this.state.pageNo + 1
             });
             if (postRefresh) {
                 postRefresh(result.datas, config.PAGE_COUNT);
@@ -76,10 +81,49 @@ export default class App extends React.Component {
                 errorInfo: error
             });
         });
+        HttpUtils.get("banner/json", null, result => {
+            this.setState({
+                bannerData: result
+            })
+        });
     }
 
     renderHeader() {
-        return null;
+        return <View>
+            {this.state.bannerData != null && this.state.bannerData.length > 0 ?
+                <View style={{height: bannerHeight}}>
+                    <Swiper
+                        autoplay={true}
+                        autoplayTimeout={2}
+                        showsPagination={false}
+                        onMomentumScrollEnd={(e, state, context) => {
+                            this.setState({
+                                    bannerIndex: state.index
+                                }
+                            )
+                        }}
+                    >
+                        {
+                            this.state.bannerData.map((value, i) => <TouchableNativeFeedback
+                                key={'index' + i}
+                                style={{height: bannerHintHeight}}
+                                onPress={() => {
+                                    ToastAndroid.show(value.title, ToastAndroid.SHORT);
+                                }}>
+                                <Image resizeMode='stretch' style={{flex: 1}} source={{uri: value.imagePath}}/>
+                            </TouchableNativeFeedback>)
+                        }
+                    </Swiper>
+                    <View style={styles.bannerHint}>
+                        <Text style={styles.bannerText}
+                              numberOfLines={1}>{this.state.bannerData[this.state.bannerIndex].title}</Text>
+                        <Text style={[styles.bannerText, {
+                            flex: 1,
+                            textAlign: 'right'
+                        }]}>{this.state.bannerIndex + 1}/{this.state.bannerData.length}</Text>
+                    </View>
+                </View> : null}
+        </View>;
     }
 
     renderItem(item, index, separators) {
@@ -93,5 +137,24 @@ export default class App extends React.Component {
     separator() {
         return <LineDivider/>;
     }
-
 }
+
+const styles = StyleSheet.create({
+    bannerHint: {
+        flex: 1,
+        width: config.SCREEN_WIDTH,
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        backgroundColor: 'grey',
+        opacity: 0.75,
+        height: bannerHintHeight,
+        top: bannerHeight - bannerHintHeight,
+        paddingStart: 10,
+        paddingEnd: 10,
+    },
+    bannerText: {
+        color: 'white',
+        fontSize: 16
+    }
+});
