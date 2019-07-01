@@ -44,7 +44,6 @@ export default class App extends React.Component {
             item={this.renderItem.bind(this)}
             emptyView={this.emptyView.bind(this)}
             separator={this.separator.bind(this)}
-            pagination={false}
             firstLoader={false}
             keyExtractor={(item, index) => `${index} - ${item}`}
             waitingSpinnerText={''}
