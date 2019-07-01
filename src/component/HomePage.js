@@ -10,8 +10,6 @@ import LoadingView from "../widget/LoadingView";
 import HttpUtils from "../http/HttpUtils";
 import ArticleItemView from "../widget/ArticleItemView"
 
-const bannerHeight = 180;
-const bannerHintHeight = 30;
 export default class App extends React.Component {
 
     constructor(props) {
@@ -91,8 +89,9 @@ export default class App extends React.Component {
     renderHeader() {
         return <View>
             {this.state.bannerData != null && this.state.bannerData.length > 0 ?
-                <View style={{height: bannerHeight}}>
+                <View style={{height: 180}}>
                     <Swiper
+                        ref={r => this.swiper = r}
                         autoplay={true}
                         autoplayTimeout={2}
                         showsPagination={false}
@@ -102,11 +101,12 @@ export default class App extends React.Component {
                                 }
                             )
                         }}
+                        onTouchStart={() => clearTimeout(this.swiper.autoplayTimer)}
+                        onTouchEnd={() => this.swiper.autoplay()}
                     >
                         {
                             this.state.bannerData.map((value, i) => <TouchableNativeFeedback
                                 key={'index' + i}
-                                style={{height: bannerHintHeight}}
                                 onPress={() => {
                                     ToastAndroid.show(value.title, ToastAndroid.SHORT);
                                 }}>
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: 'grey',
         opacity: 0.75,
-        height: bannerHintHeight,
-        top: bannerHeight - bannerHintHeight,
+        height: 30,
+        bottom: 0,
         paddingStart: 10,
         paddingEnd: 10,
     },
