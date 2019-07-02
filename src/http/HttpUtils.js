@@ -58,10 +58,6 @@ function timeoutRequest(originalRequest, timeout = 12000) {
             reject("请求超时,请检查网络！");
         }, timeout);
     });
-    timeoutPromise.catch(error => {
-        HintUtils.logOrAlert(error);
-        HintUtils.toast(error);
-    });
     return Promise.race([originalRequest, timeoutPromise]);
 }
 
