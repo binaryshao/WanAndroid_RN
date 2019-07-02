@@ -63,28 +63,38 @@ export default class App extends React.Component {
         if (page === 1) {
             this.state.pageNo = 0;
         }
-        HttpUtils.get("article/list/" + this.state.pageNo + "/json", null, result => {
-            this.setState({
-                isLoading: false,
-                pageNo: this.state.pageNo + 1
-            });
-            if (postRefresh) {
-                postRefresh(result.datas, config.PAGE_COUNT);
-            } else {
-                this.flatList.postRefresh(result.datas, config.PAGE_COUNT);
-            }
-        }, error => {
-            this.setState({
-                isLoading: false,
-                error: true,
-                errorInfo: error
-            });
-        });
-        HttpUtils.get("banner/json", null, result => {
-            this.setState({
-                bannerData: result
+        HttpUtils.get("article/list/" + this.state.pageNo + "/json", null)
+            .then(result => {
+                this.setState({
+                    isLoading: false,
+                    pageNo: this.state.pageNo + 1
+                });
+                if (postRefresh) {
+                    postRefresh(result.datas, config.PAGE_COUNT);
+                } else {
+                    this.flatList.postRefresh(result.datas, config.PAGE_COUNT);
+                }
             })
-        });
+            .catch(error => {
+                this.setState({
+                    isLoading: false,
+                    error: true,
+                    errorInfo: error
+                })
+            });
+        HttpUtils.get("banner/json", null)
+            .then(result => {
+                this.setState({
+                    bannerData: result
+                })
+            })
+            .catch(error => {
+                this.setState({
+                    isLoading: false,
+                    error: true,
+                    errorInfo: error
+                })
+            })
     }
 
     renderHeader() {
