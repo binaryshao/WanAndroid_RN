@@ -69,32 +69,48 @@ export default class App extends React.Component {
                     })
                 })
                 .catch(error => {
-                    this.setState({
-                        isLoading: false,
-                        error: true,
-                        errorInfo: error
-                    })
-                })
-        }
-        HttpUtils.get("article/list/" + this.state.pageNo + "/json", null)
-            .then(result => {
-                this.setState({
-                    isLoading: false,
-                    pageNo: this.state.pageNo + 1
+                    this.onError(error);
                 });
-                if (postRefresh) {
-                    postRefresh(result.datas, config.PAGE_COUNT);
-                } else {
-                    this.flatList.postRefresh(result.datas, config.PAGE_COUNT);
-                }
-            })
-            .catch(error => {
-                this.setState({
-                    isLoading: false,
-                    error: true,
-                    errorInfo: error
+            Promise.all([HttpUtils.get("article/top/json", null),
+                HttpUtils.get("article/list/0/json", null)])
+                .then(result => {
+                    result[0].map((value, i) => {
+                        value.isTop = true;
+                    });
+                    this.showArticles([...result[0], ...result[1].datas], postRefresh);
                 })
-            });
+                .catch(error => {
+                    this.onError(error);
+                });
+        } else {
+            HttpUtils.get("article/list/" + this.state.pageNo + "/json", null)
+                .then(result => {
+                    this.showArticles(result.datas, postRefresh);
+                })
+                .catch(error => {
+                    this.onError(error);
+                });
+        }
+    }
+
+    showArticles(result, postRefresh) {
+        this.setState({
+            isLoading: false,
+            pageNo: this.state.pageNo + 1
+        });
+        if (postRefresh) {
+            postRefresh(result, config.PAGE_COUNT);
+        } else {
+            this.flatList.postRefresh(result, config.PAGE_COUNT);
+        }
+    }
+
+    onError(error) {
+        this.setState({
+            isLoading: false,
+            error: true,
+            errorInfo: error
+        })
     }
 
     renderHeader() {
