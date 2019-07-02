@@ -60,8 +60,21 @@ export default class App extends React.Component {
     }
 
     getData(page, postRefresh, endFetch) {
-        if (page === 1) {
+        if (page === 1 || this.state.pageNo === 0) {
             this.state.pageNo = 0;
+            HttpUtils.get("banner/json", null)
+                .then(result => {
+                    this.setState({
+                        bannerData: result
+                    })
+                })
+                .catch(error => {
+                    this.setState({
+                        isLoading: false,
+                        error: true,
+                        errorInfo: error
+                    })
+                })
         }
         HttpUtils.get("article/list/" + this.state.pageNo + "/json", null)
             .then(result => {
@@ -82,19 +95,6 @@ export default class App extends React.Component {
                     errorInfo: error
                 })
             });
-        HttpUtils.get("banner/json", null)
-            .then(result => {
-                this.setState({
-                    bannerData: result
-                })
-            })
-            .catch(error => {
-                this.setState({
-                    isLoading: false,
-                    error: true,
-                    errorInfo: error
-                })
-            })
     }
 
     renderHeader() {
