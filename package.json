@@ -13,6 +13,7 @@
     "react-native-root-toast": "^3.1.1",
     "react-native-swiper": "^1.5.14",
     "react-native-ultimate-listview": "^3.3.0",
+    "react-native-webview": "^5.12.1",
     "react-navigation": "3.11.0"
   },
   "devDependencies": {
