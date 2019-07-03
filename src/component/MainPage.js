@@ -79,9 +79,11 @@ export default createBottomTabNavigator({
             labelStyle: {
                 fontSize: 14,
             },
-            tabStyle: {
-                paddingBottom: 2,
-            },
+            style: {
+                height: 50,
+                paddingBottom: 4,
+                paddingTop: 4
+            }
         }
     });
 

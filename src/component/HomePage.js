@@ -16,7 +16,7 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            error: false,
+            isError: false,
             errorInfo: "",
             pageNo: 0,
             bannerData: [],
@@ -32,7 +32,7 @@ export default class App extends React.Component {
     render() {
         if (this.state.isLoading) {
             return <LoadingView/>;
-        } else if (this.state.error) {
+        } else if (this.state.isError) {
             return <ErrorView error={this.state.errorInfo}/>;
         }
         return this.renderData();
@@ -107,7 +107,7 @@ export default class App extends React.Component {
     onError(error) {
         this.setState({
             isLoading: false,
-            error: true,
+            isError: true,
             errorInfo: error
         })
     }
