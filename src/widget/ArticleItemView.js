@@ -1,55 +1,63 @@
 import React, {PureComponent} from "react";
-import {StyleSheet, Text, View, Image} from "react-native";
+import {StyleSheet, Text, View, Image, TouchableNativeFeedback} from "react-native";
 import * as config from "../config";
 
 export default class App extends PureComponent {
 
     render() {
-        return <View style={styles.item}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={styles.normalText}>
-                    {this.props.item.author}
-                </Text>
-                <Text style={[styles.normalText, {color: 'red', marginLeft: 5}]}>
-                    {this.props.item.fresh ? "新" : ""}
-                </Text>
-                <Text style={[styles.normalText, {color: 'red', marginLeft: 5}]}>
-                    {this.props.item.isTop ? "置顶" : ""}
-                </Text>
-                <Text style={[styles.normalText, {flex: 1, textAlign: 'right'}]}>
-                    {this.props.item.niceDate}
-                </Text>
-            </View>
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
-                {this.getImage()}
-                <View style={{flex: 1}}>
-                    <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>
-                        {this.props.item.title}
+        const {navigation, item} = this.props;
+        return <TouchableNativeFeedback onPress={() => {
+            navigation.navigate('Web', {
+                url: item.link,
+                title: item.title
+            })
+        }}>
+            <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Text style={styles.normalText}>
+                        {item.author}
                     </Text>
-                    {this.getDesc()}
+                    <Text style={[styles.normalText, {color: 'red', marginLeft: 5}]}>
+                        {item.fresh ? "新" : ""}
+                    </Text>
+                    <Text style={[styles.normalText, {color: 'red', marginLeft: 5}]}>
+                        {item.isTop ? "置顶" : ""}
+                    </Text>
+                    <Text style={[styles.normalText, {flex: 1, textAlign: 'right'}]}>
+                        {item.niceDate}
+                    </Text>
                 </View>
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
+                    {this.getImage(item)}
+                    <View style={{flex: 1}}>
+                        <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>
+                            {item.title}
+                        </Text>
+                        {this.getDesc(item)}
+                    </View>
+                </View>
+                <Text style={[styles.normalText, {marginTop: 5}]}>
+                    {item.superChapterName}/{item.chapterName}
+                </Text>
             </View>
-            <Text style={[styles.normalText, {marginTop: 5}]}>
-                {this.props.item.superChapterName}/{this.props.item.chapterName}
-            </Text>
-        </View>
+        </TouchableNativeFeedback>
     }
 
-    getImage() {
-        if (this.props.item.envelopePic) {
+    getImage(item) {
+        if (item.envelopePic) {
             return <Image
-                source={{uri: this.props.item.envelopePic}}
-                style={{width: 120, height: 100, marginRight: 5}}
+                source={{uri: item.envelopePic}}
+                style={{width: 120, height: 100, marginRight: 5, borderRadius: 8}}
             />;
         } else {
             return null;
         }
     }
 
-    getDesc() {
-        if (this.props.item.desc) {
+    getDesc(item) {
+        if (item.desc) {
             return <Text style={[styles.normalText, {marginTop: 10}]} numberOfLines={3} ellipsizeMode={'tail'}>
-                {this.props.item.desc}
+                {item.desc}
             </Text>;
         } else {
             return null;

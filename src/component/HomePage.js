@@ -9,7 +9,6 @@ import ErrorView from "../widget/ErrorView";
 import LoadingView from "../widget/LoadingView";
 import HttpUtils from "../http/HttpUtils";
 import ArticleItemView from "../widget/ArticleItemView"
-import HintUtils from "../utils/HintUtils";
 
 export default class App extends React.Component {
 
@@ -135,7 +134,10 @@ export default class App extends React.Component {
                             this.state.bannerData.map((value, i) => <TouchableNativeFeedback
                                 key={'index' + i}
                                 onPress={() => {
-                                    HintUtils.toast(value.title);
+                                    this.props.navigation.navigate('Web', {
+                                        url: value.url,
+                                        title: value.title
+                                    })
                                 }}>
                                 <Image resizeMode='stretch' style={{flex: 1}} source={{uri: value.imagePath}}/>
                             </TouchableNativeFeedback>)
@@ -154,7 +156,7 @@ export default class App extends React.Component {
     }
 
     renderItem(item, index, separators) {
-        return <ArticleItemView item={item}/>;
+        return <ArticleItemView item={item} navigation={this.props.navigation}/>;
     }
 
     emptyView() {
