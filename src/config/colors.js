@@ -6,3 +6,4 @@ export const textColorPrimary = "#212121";
 export const textColorSecondary = "#757575";
 export const divider = "#BDBDBD";
 export const transparent = "#00000000";
+export const refreshColors = ['red', 'green', 'blue'];

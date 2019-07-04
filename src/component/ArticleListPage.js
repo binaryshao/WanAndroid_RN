@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, RefreshControl} from 'react-native';
 import HttpUtils from "../http/HttpUtils";
 import LoadingView from "../widget/LoadingView";
 import ErrorView from "../widget/ErrorView";
@@ -7,6 +7,7 @@ import EmptyView from "../widget/EmptyView";
 import ArticleItemView from "../widget/ArticleItemView";
 import LineDivider from "../widget/LineDivider";
 import EndView from "../widget/EndView";
+import * as config from "../config";
 
 export default class App extends React.Component {
 
@@ -66,11 +67,14 @@ export default class App extends React.Component {
         return <FlatList
             data={this.state.data}
             renderItem={(info) => <ArticleItemView item={info.item} navigation={this.props.navigation}/>}
-            onRefresh={() => {
-                this.state.pageNo = 1;
-                this.getData();
-            }}
-            refreshing={this.state.pageNo === 1}
+            refreshControl={<RefreshControl
+                onRefresh={() => {
+                    this.state.pageNo = 1;
+                    this.getData();
+                }}
+                refreshing={this.state.pageNo === 1}
+                colors={config.refreshColors}
+            />}
             ListEmptyComponent={<EmptyView/>}
             onEndReached={() => {
                 if (!this.state.isAllLoaded) {

@@ -42,6 +42,7 @@ export default class App extends React.Component {
         return <UltimateListView
             ref={ref => this.flatList = ref}
             refreshable={true}
+            refreshableColors={config.refreshColors}
             onFetch={this.getData.bind(this)}
             header={this.renderHeader.bind(this)}
             item={this.renderItem.bind(this)}
