@@ -1,11 +1,11 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {createMaterialTopTabNavigator, createAppContainer} from 'react-navigation';
 import HttpUtils from "../http/HttpUtils";
 import LoadingView from "../widget/LoadingView";
 import ErrorView from "../widget/ErrorView";
 import EmptyView from "../widget/EmptyView";
 import * as config from "../config";
+import ArticleListPage from "./ArticleListPage";
 
 export default class App extends React.Component {
 
@@ -84,10 +84,7 @@ export default class App extends React.Component {
         let tabPages = {};
         this.state.data.map((value, i) => {
             tabPages[value.name] = {
-                screen: () => <Text style={{
-                    width: config.SCREEN_WIDTH,
-                    textAlign: 'center'
-                }}>公众号列表 {i}</Text>
+                screen: () => <ArticleListPage chapterId={value.id} navigation={this.props.navigation}/>
             }
         });
         return tabPages;

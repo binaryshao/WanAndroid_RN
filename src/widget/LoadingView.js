@@ -11,7 +11,7 @@ export default class app extends Component {
                     animating={true}
                     style={{height: 60}}
                     color={config.colorAccent}
-                    size="large"
+                    size={this.props.size ? this.props.size : 'large'}
                 />
                 <Text style={{fontSize: 20}}>{config.LOADING}</Text>
             </View>
