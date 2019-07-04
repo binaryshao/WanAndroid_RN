@@ -4,6 +4,6 @@ import ArticleTabPage from "./ArticleTabPage";
 export default class App extends React.Component {
 
     render() {
-        return <ArticleTabPage path={'wxarticle/chapters/json'}/>
+        return <ArticleTabPage path={'wxarticle/chapters/json'} navigation={this.props.navigation}/>
     }
 }
