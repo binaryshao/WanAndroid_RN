@@ -5,14 +5,15 @@ import LoadingView from "../widget/LoadingView";
 import ErrorView from "../widget/ErrorView";
 import EmptyView from "../widget/EmptyView";
 import * as config from "../config";
-import HintUtils from "../utils/HintUtils";
 
 const colors = ['yellow', 'red', 'green', 'black', 'forestgreen', 'gold', 'hotpink'];
+let navigation;
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
+        navigation = this.props.navigation;
         this.state = {
             isLoading: true,
             isError: false,
@@ -59,7 +60,11 @@ export default class App extends React.Component {
 
     renderItem({item}) {
         return <TouchableNativeFeedback onPress={() => {
-            HintUtils.toast(item.name)
+            navigation.navigate("Knowledge", {
+                title: item.name,
+                data: item.children,
+                navigation: navigation
+            });
         }}>
             <View style={styles.itemContainer}>
                 <Text style={styles.title}>

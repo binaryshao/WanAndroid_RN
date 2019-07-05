@@ -23,6 +23,11 @@ export default class App extends React.Component {
     componentDidMount() {
         if (this.props.path && this.props.path.length > 0) {
             this.getData();
+        } else if (this.props.data) {
+            this.setState({
+                isLoading: false,
+                data: this.props.data
+            })
         } else {
             this.setState({
                 isLoading: false,

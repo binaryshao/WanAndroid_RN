@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text} from 'react-native';
+import ArticleTabPage from "./ArticleTabPage";
 
 export default class App extends React.Component {
 
     render() {
-        return <Text>知识就是力量</Text>
+        const nav = this.props.navigation;
+        return <ArticleTabPage data={nav.getParam('data')} navigation={nav}/>
     }
 }
