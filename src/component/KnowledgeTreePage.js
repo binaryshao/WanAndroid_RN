@@ -6,7 +6,7 @@ import ErrorView from "../widget/ErrorView";
 import EmptyView from "../widget/EmptyView";
 import * as config from "../config";
 
-const colors = ['yellow', 'red', 'green', 'black', 'forestgreen', 'gold', 'hotpink'];
+const colors = ['orange', 'red', 'green', 'black', 'fuchsia', 'chocolate', 'hotpink', 'tomato'];
 let navigation;
 
 export default class App extends React.Component {
@@ -60,7 +60,7 @@ export default class App extends React.Component {
 
     renderItem({item}) {
         return <TouchableNativeFeedback onPress={() => {
-            navigation.navigate("Knowledge", {
+            navigation.navigate('Knowledge', {
                 title: item.name,
                 data: item.children,
                 navigation: navigation
@@ -71,8 +71,8 @@ export default class App extends React.Component {
                     {item.name}
                 </Text>
                 <View style={styles.contentContainer}>
-                    {item.children.map((value) => {
-                        let color = colors[Math.ceil(Math.random() * (colors.length - 1))];
+                    {item.children.map((value, index) => {
+                        let color = colors[index % (colors.length)];
                         return <View style={[styles.textContainer, {backgroundColor: color}]}>
                             <Text style={styles.content}>
                                 {value.name}
