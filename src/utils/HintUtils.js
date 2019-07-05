@@ -10,7 +10,7 @@ const isDev = () => {
 
 export default class HintUtils {
     static logOrAlert(msg) {
-        if (isDev()) {
+        if (__DEV__) {
             if (alertShow) {
                 alert(msg);
             } else {
