@@ -1,5 +1,8 @@
 import React from 'react';
-import {Text, View, Image, Platform, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {
+    Text, View, Image, Platform, StyleSheet,
+    TouchableNativeFeedback, SafeAreaView, StatusBar
+} from 'react-native';
 import {UltimateListView} from "react-native-ultimate-listview";
 import Swiper from 'react-native-swiper';
 import * as config from "../../config";
@@ -9,6 +12,7 @@ import ErrorView from "../../widget/ErrorView";
 import LoadingView from "../../widget/LoadingView";
 import HttpUtils from "../../http/HttpUtils";
 import ArticleItemView from "../../widget/ArticleItemView"
+
 
 export default class App extends React.Component {
 
@@ -43,24 +47,30 @@ export default class App extends React.Component {
     }
 
     renderData() {
-        return <UltimateListView
-            ref={ref => this.flatList = ref}
-            refreshable={true}
-            refreshableColors={config.refreshColors}
-            onFetch={this.getData.bind(this)}
-            header={this.renderHeader.bind(this)}
-            item={this.renderItem.bind(this)}
-            emptyView={this.emptyView.bind(this)}
-            separator={this.separator.bind(this)}
-            firstLoader={false}
-            keyExtractor={(item, index) => `${index} - ${item}`}
-            waitingSpinnerText={config.LOADING}
-            allLoadedText={config.NO_MORE_DATA}
-            refreshableTitlePull={config.PULL_TO_REFRESH}
-            refreshableTitleRelease={config.RELEASE_TO_REFRESH}
-            refreshableTitleRefreshing={config.REFRESHING}
-            refreshableMode={Platform.OS === "ios" ? "advanced" : "basic"}
-        />
+        return <SafeAreaView>
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor={config.colorPrimaryDark}
+            />
+            <UltimateListView
+                ref={ref => this.flatList = ref}
+                refreshable={true}
+                refreshableColors={config.refreshColors}
+                onFetch={this.getData.bind(this)}
+                header={this.renderHeader.bind(this)}
+                item={this.renderItem.bind(this)}
+                emptyView={this.emptyView.bind(this)}
+                separator={this.separator.bind(this)}
+                firstLoader={false}
+                keyExtractor={(item, index) => `${index} - ${item}`}
+                waitingSpinnerText={config.LOADING}
+                allLoadedText={config.NO_MORE_DATA}
+                refreshableTitlePull={config.PULL_TO_REFRESH}
+                refreshableTitleRelease={config.RELEASE_TO_REFRESH}
+                refreshableTitleRefreshing={config.REFRESHING}
+                refreshableMode={Platform.OS === "ios" ? "advanced" : "basic"}
+            />
+        </SafeAreaView>
     }
 
     getData(page, postRefresh, endFetch) {
