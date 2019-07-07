@@ -6,7 +6,7 @@ import WeChatPage from "./WeChatPage";
 import ProjectPage from "./ProjectPage";
 import NavigationPage from "./NavigationPage";
 import KnowledgeTreePage from "./KnowledgeTreePage";
-import * as config from "../config";
+import * as config from "../../config";
 
 export default createBottomTabNavigator({
         Home: {
@@ -15,7 +15,7 @@ export default createBottomTabNavigator({
                 tabBarLabel: "首页",
                 tabBarIcon: ({focused, tintColor}) => (
                     <Image
-                        source={require('../../res/ic_home.png')}
+                        source={require('../../../res/ic_home.png')}
                         style={[styles.tabBar, {tintColor: tintColor}]}
                     />
                 ),
@@ -27,7 +27,7 @@ export default createBottomTabNavigator({
                 tabBarLabel: "公众号",
                 tabBarIcon: ({focused, tintColor}) => (
                     <Image
-                        source={require('../../res/ic_wechat.png')}
+                        source={require('../../../res/ic_wechat.png')}
                         style={[styles.tabBar, {tintColor: tintColor}]}
                     />
                 ),
@@ -39,7 +39,7 @@ export default createBottomTabNavigator({
                 tabBarLabel: "项目",
                 tabBarIcon: ({focused, tintColor}) => (
                     <Image
-                        source={require('../../res/ic_project.png')}
+                        source={require('../../../res/ic_project.png')}
                         style={[styles.tabBar, {tintColor: tintColor}]}
                     />
                 ),
@@ -51,7 +51,7 @@ export default createBottomTabNavigator({
                 tabBarLabel: "网站导航",
                 tabBarIcon: ({focused, tintColor}) => (
                     <Image
-                        source={require('../../res/ic_navigation.png')}
+                        source={require('../../../res/ic_navigation.png')}
                         style={[styles.tabBar, {tintColor: tintColor}]}
                     />
                 ),
@@ -63,7 +63,7 @@ export default createBottomTabNavigator({
                 tabBarLabel: "知识体系",
                 tabBarIcon: ({focused, tintColor}) => (
                     <Image
-                        source={require('../../res/ic_dashboard.png')}
+                        source={require('../../../res/ic_dashboard.png')}
                         style={[styles.tabBar, {tintColor: tintColor}]}
                     />
                 ),

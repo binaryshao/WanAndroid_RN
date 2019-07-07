@@ -1,12 +1,12 @@
 import React from 'react';
 import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
-import MainPage from "./component/MainPage"
+import MainPage from "./component/main/MainPage"
 import DrawerPage from "./component/DrawerPage"
 import WebPage from "./component/WebPage";
 import KnowledgePage from "./component/KnowledgePage";
-import LoginPage from "./component/LoginPage";
-import RegisterPage from "./component/RegisterPage";
-import FavoritePage from "./component/FavoritePage";
+import LoginPage from "./component/login/LoginPage";
+import RegisterPage from "./component/login/RegisterPage";
+import FavoritePage from "./component/login/FavoritePage";
 
 const Main = createDrawerNavigator(
     {

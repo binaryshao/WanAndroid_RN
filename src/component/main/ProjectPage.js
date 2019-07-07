@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleTabPage from "./ArticleTabPage";
+import ArticleTabPage from "../ArticleTabPage";
 
 export default class App extends React.Component {
 

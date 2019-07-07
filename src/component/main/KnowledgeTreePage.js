@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, FlatList, TouchableNativeFeedback, StyleSheet} from 'react-native';
-import HttpUtils from "../http/HttpUtils";
-import LoadingView from "../widget/LoadingView";
-import ErrorView from "../widget/ErrorView";
-import EmptyView from "../widget/EmptyView";
-import * as config from "../config";
+import HttpUtils from "../../http/HttpUtils";
+import LoadingView from "../../widget/LoadingView";
+import ErrorView from "../../widget/ErrorView";
+import EmptyView from "../../widget/EmptyView";
+import * as config from "../../config";
 
 const colors = ['orange', 'red', 'green', 'black', 'fuchsia', 'chocolate', 'hotpink', 'tomato'];
 let navigation;

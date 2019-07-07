@@ -2,13 +2,13 @@ import React from 'react';
 import {Text, View, Image, Platform, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {UltimateListView} from "react-native-ultimate-listview";
 import Swiper from 'react-native-swiper';
-import * as config from "../config";
-import LineDivider from "../widget/LineDivider";
-import EmptyView from "../widget/EmptyView";
-import ErrorView from "../widget/ErrorView";
-import LoadingView from "../widget/LoadingView";
-import HttpUtils from "../http/HttpUtils";
-import ArticleItemView from "../widget/ArticleItemView"
+import * as config from "../../config";
+import LineDivider from "../../widget/LineDivider";
+import EmptyView from "../../widget/EmptyView";
+import ErrorView from "../../widget/ErrorView";
+import LoadingView from "../../widget/LoadingView";
+import HttpUtils from "../../http/HttpUtils";
+import ArticleItemView from "../../widget/ArticleItemView"
 
 export default class App extends React.Component {
 
