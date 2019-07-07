@@ -5,9 +5,14 @@ import LoadingView from "../widget/LoadingView";
 
 export default class App extends React.Component {
 
+    static navigationOptions = ({navigation}) => {
+        return {
+            title: navigation.getParam('title', ''),
+        };
+    };
+
     render() {
         const {navigation} = this.props;
-        const title = navigation.getParam('title', '未知标题');
         const url = navigation.getParam('url', 'https://www.wanandroid.com/');
         return <WebView source={{uri: url, method: 'GET'}}
                         startInLoadingState={true}

@@ -11,6 +11,10 @@ let navigation;
 
 export default class App extends React.Component {
 
+    static navigationOptions = {
+        title: "知识体系",
+    };
+
     constructor(props) {
         super(props);
         navigation = this.props.navigation;

@@ -12,6 +12,10 @@ import ArticleItemView from "../../widget/ArticleItemView"
 
 export default class App extends React.Component {
 
+    static navigationOptions = {
+        title: "玩安卓",
+    };
+
     constructor(props) {
         super(props);
         this.state = {

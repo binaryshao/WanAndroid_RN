@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image, TouchableWithoutFeedback} from 'react-native';
 import {createBottomTabNavigator} from "react-navigation";
 import HomePage from "./HomePage";
 import WeChatPage from "./WeChatPage";
@@ -84,7 +84,7 @@ export default createBottomTabNavigator({
                 paddingBottom: 4,
                 paddingTop: 4
             }
-        }
+        },
     });
 
 
