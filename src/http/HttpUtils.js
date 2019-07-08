@@ -17,7 +17,7 @@ function getFormData(params) {
 
 function request(path, config) {
     let url = getRequestUrl(path);
-    HintUtils.logOrAlert(config.method + "请求：" + url + "\n参数：\n" + config.body);
+    HintUtils.logOrAlert(config.method + "请求：" + url + "\n参数：\n" + JSON.stringify(config.body, null, "\t"));
     let request = new Promise((resolve, reject) => {
         fetch(url, config)
             .then(response => {

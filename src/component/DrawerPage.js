@@ -24,12 +24,20 @@ export default class App extends React.Component {
 
     render() {
         return <View>
-            <View style={styles.header}>
-                <Image style={styles.avatar} source={require('../../res/ic_avatar.png')}/>
-                <Text style={styles.userName}>
-                    {this.state.userName ? this.state.userName : "还没有登录..."}
-                </Text>
-            </View>
+            <TouchableNativeFeedback onPress={() => {
+                if (this.state.userName) {
+                    HintUtils.toast('你好...' + this.state.userName)
+                } else {
+                    this.props.navigation.navigate('Login');
+                }
+            }}>
+                <View style={styles.header}>
+                    <Image style={styles.avatar} source={require('../../res/ic_avatar.png')}/>
+                    <Text style={styles.userName}>
+                        {this.state.userName ? this.state.userName : "还没有登录..."}
+                    </Text>
+                </View>
+            </TouchableNativeFeedback>
             {this.getItemView("收藏夹", require('../../res/ic_favorite_not.png'), () => {
                 this.props.navigation.navigate('Favorite');
             })}
