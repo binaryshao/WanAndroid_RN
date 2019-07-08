@@ -9,6 +9,8 @@ import LoginPage from "./component/login/LoginPage";
 import RegisterPage from "./component/login/RegisterPage";
 import FavoritePage from "./component/login/FavoritePage";
 import * as config from "./config"
+import TodoPage from "./component/login/TodoPage";
+import AboutPage from "./component/login/AboutPage";
 
 const Main = createDrawerNavigator(
     {
@@ -45,6 +47,8 @@ const pages = {
     Login: {screen: LoginPage, navigationOptions: () => ({})},
     Register: {screen: RegisterPage, navigationOptions: () => ({})},
     Favorite: {screen: FavoritePage, navigationOptions: () => ({})},
+    Todo: {screen: TodoPage, navigationOptions: () => ({})},
+    About: {screen: AboutPage, navigationOptions: () => ({})},
 };
 
 export default createAppContainer(createStackNavigator(pages, {

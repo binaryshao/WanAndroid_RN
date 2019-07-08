@@ -4,10 +4,10 @@ import {Text} from 'react-native';
 export default class App extends React.Component {
 
     static navigationOptions = {
-        title: "我的收藏",
+        title: "关于我们",
     };
 
     render() {
-        return <Text>收藏夹</Text>
+        return <Text>我们不一样</Text>
     }
 }
