@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Image, Text, TouchableNativeFeedback, StyleSheet} from 'react-native';
 import * as config from "../config"
 import HintUtils from "../utils/HintUtils";
+import AccountUtils from "../utils/AccountUtils";
 
 export default class App extends React.Component {
 
