@@ -41,7 +41,14 @@ export default class App extends React.Component {
                     {this.state.isLoading ? "登录中..." : "登录"}
                 </Text>
             </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={() => {
+                this.props.navigation.navigate("Register");
+            }}>
+                <Text style={styles.register}>
+                    还没有账号？点击去注册
+                </Text>
+            </TouchableOpacity>
+        </View>;
     }
 
     login() {
@@ -96,5 +103,10 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontSize: 16,
+    },
+    register: {
+        color: config.colorPrimaryDark,
+        marginTop: 20,
+        fontSize: 14,
     },
 });
