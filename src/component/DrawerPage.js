@@ -3,6 +3,7 @@ import {View, Image, Text, TouchableNativeFeedback, StyleSheet} from 'react-nati
 import * as config from "../config"
 import HintUtils from "../utils/HintUtils";
 import AccountUtils from "../utils/AccountUtils";
+import HttpUtils from "../http/HttpUtils";
 
 export default class App extends React.Component {
 
@@ -48,7 +49,12 @@ export default class App extends React.Component {
                 this.props.navigation.navigate('About');
             })}
             {this.state.userName ? this.getItemView("退出登录", require('../../res/ic_logout.png'), () => {
-                HintUtils.toast('to be completed...')
+                HintUtils.alert("退出登录", "确定要退出吗？", () => {
+                    HttpUtils.get('user/logout/json', null)
+                        .then(() => {
+                            this.logout();
+                        })
+                });
             }) : null}
         </View>
     }
@@ -62,6 +68,14 @@ export default class App extends React.Component {
                 </Text>
             </View>
         </TouchableNativeFeedback>
+    }
+
+    async logout() {
+        await AccountUtils.removeUser();
+        HintUtils.toast("已退出登录");
+        this.setState({
+            userName: '',
+        })
     }
 }
 

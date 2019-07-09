@@ -1,4 +1,4 @@
-import {NativeModules} from 'react-native';
+import {NativeModules, Alert} from 'react-native';
 import Toast from 'react-native-root-toast';
 
 const alertShow = false;
@@ -30,6 +30,13 @@ export default class HintUtils {
                 fontSize: 14
             },
         })
+    }
+
+    static alert(title, msg, onConfirm, onCancel) {
+        Alert.alert(title, msg, [
+            {text: "确定", onPress: onConfirm,},
+            {text: "取消", onPress: onCancel}
+        ], {cancelable: false});
     }
 
 }
