@@ -181,7 +181,7 @@ export default class App extends React.Component {
     }
 
     renderItem(item, index, separators) {
-        return <ArticleItemView item={item} navigation={this.props.navigation}/>;
+        return <ArticleItemView item={item}/>;
     }
 
     emptyView() {

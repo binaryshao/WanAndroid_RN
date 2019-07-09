@@ -1,8 +1,10 @@
 import React, {PureComponent} from "react";
 import {StyleSheet, Text, View, Image, TouchableNativeFeedback} from "react-native";
+import {withNavigation} from 'react-navigation';
+
 import * as config from "../config";
 
-export default class App extends PureComponent {
+class App extends PureComponent {
 
     render() {
         const {navigation, item} = this.props;
@@ -83,3 +85,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
     }
 });
+
+export default withNavigation(App);
