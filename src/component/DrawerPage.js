@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Image, Text, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import {View, Image, Text, TouchableNativeFeedback, StyleSheet, DeviceEventEmitter} from 'react-native';
 import * as config from "../config"
 import HintUtils from "../utils/HintUtils";
 import AccountUtils from "../utils/AccountUtils";
 import HttpUtils from "../http/HttpUtils";
+
+let loginSubscription;
 
 export default class App extends React.Component {
 
@@ -15,12 +17,21 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        loginSubscription = DeviceEventEmitter.addListener('login', this.refreshUser.bind(this));
+        this.refreshUser();
+    }
+
+    refreshUser() {
         AccountUtils.getUserName()
             .then(name => {
                 this.setState({
                     userName: name,
                 })
-            })
+            });
+    }
+
+    componentWillUnmount(): void {
+        DeviceEventEmitter.removeSubscription(loginSubscription);
     }
 
     render() {

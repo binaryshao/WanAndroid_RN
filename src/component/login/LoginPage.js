@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, DeviceEventEmitter} from 'react-native';
 import HintUtils from "../../utils/HintUtils";
 import HttpUtils from "../../http/HttpUtils";
-import AsyncStorage from "@react-native-community/async-storage";
 import * as config from "../../config";
+import AccountUtils from "../../utils/AccountUtils";
 
 export default class App extends React.Component {
 
@@ -58,19 +58,20 @@ export default class App extends React.Component {
                 password: this.state.password
             })
                 .then(result => {
-                    this.saveUser(result.nickname);
+                    this.loginSuccess(result.nickname);
                 })
                 .finally(() => {
                     this.setState({
                         isLoading: false
                     });
-                })
+                });
         }
     }
 
-    async saveUser(name) {
-        await AsyncStorage.setItem('userName', name);
+    async loginSuccess(name) {
+        await AccountUtils.saveUserName(name);
         HintUtils.toast("登录成功");
+        DeviceEventEmitter.emit('login');
         this.props.navigation.pop();
     }
 }
