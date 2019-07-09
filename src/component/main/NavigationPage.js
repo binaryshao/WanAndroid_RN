@@ -54,12 +54,13 @@ export default class App extends React.Component {
             return <LoadingView/>;
         } else if (this.state.isError) {
             return <ErrorView error={this.state.errorInfo}/>;
+        } else if (this.state.data.length === 0) {
+            return <EmptyView/>;
         }
         return <View style={[config.container, {flexDirection: 'row'}]}>
             <FlatList
                 data={this.state.data}
                 renderItem={this.renderLeftItem.bind(this)}
-                ListEmptyComponent={<EmptyView/>}
                 keyExtractor={(item, index) => index + ""}
                 ItemSeparatorComponent={LineDivider}
             />
@@ -67,7 +68,6 @@ export default class App extends React.Component {
                 ref='rightFlatList'
                 data={this.state.data}
                 renderItem={this.renderRightItem}
-                ListEmptyComponent={<EmptyView/>}
                 keyExtractor={(item, index) => index + ""}
             />
         </View>;

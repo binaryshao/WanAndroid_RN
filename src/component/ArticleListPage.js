@@ -55,6 +55,8 @@ export default class App extends React.Component {
             return <LoadingView/>;
         } else if (this.state.isError) {
             return <ErrorView error={this.state.errorInfo}/>;
+        } else if (this.state.data.length === 0) {
+            return <EmptyView/>;
         }
         return <FlatList
             data={this.state.data}
@@ -67,7 +69,6 @@ export default class App extends React.Component {
                 refreshing={this.state.pageNo === 1}
                 colors={config.refreshColors}
             />}
-            ListEmptyComponent={<EmptyView/>}
             onEndReached={() => {
                 if (!this.state.isAllLoaded) {
                     this.setState({isLoadMoreFailed: false});
