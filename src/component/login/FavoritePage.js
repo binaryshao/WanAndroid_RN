@@ -40,7 +40,7 @@ export default class App extends React.Component {
                     isError: false,
                     isLoadMoreFailed: false,
                     pageNo: this.state.pageNo + 1,
-                    isAllLoaded: this.state.pageNo > result.pageCount,
+                    isAllLoaded: this.state.pageNo + 1 > result.pageCount,
                     data: isLoadingMore ? [...this.state.data, ...result.datas] : result.datas
                 });
             })
