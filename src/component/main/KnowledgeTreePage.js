@@ -5,15 +5,12 @@ import LoadingView from "../../widget/LoadingView";
 import ErrorView from "../../widget/ErrorView";
 import EmptyView from "../../widget/EmptyView";
 import * as config from "../../config";
+import MainHeaderBar from "../../widget/MainHeaderBar";
 
 const colors = ['orange', 'red', 'green', 'black', 'fuchsia', 'chocolate', 'hotpink', 'tomato'];
 let navigation;
 
 export default class App extends React.Component {
-
-    static navigationOptions = {
-        title: "知识体系",
-    };
 
     constructor(props) {
         super(props);
@@ -65,11 +62,14 @@ export default class App extends React.Component {
         } else if (this.state.data.length === 0) {
             return <EmptyView retry={this.retry.bind(this)}/>;
         }
-        return <FlatList
-            data={this.state.data}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index + ""}
-        />
+        return <View style={{flex: 1}}>
+            <MainHeaderBar title={"知识体系"}/>
+            <FlatList
+                data={this.state.data}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => index + ""}
+            />
+        </View>
     }
 
     renderItem({item}) {

@@ -12,13 +12,10 @@ import ErrorView from "../../widget/ErrorView";
 import LoadingView from "../../widget/LoadingView";
 import HttpUtils from "../../http/HttpUtils";
 import ArticleItemView from "../../widget/ArticleItemView"
+import MainHeaderBar from "../../widget/MainHeaderBar";
 
 
 export default class App extends React.Component {
-
-    static navigationOptions = {
-        title: "玩安卓",
-    };
 
     constructor(props) {
         super(props);
@@ -47,11 +44,12 @@ export default class App extends React.Component {
     }
 
     renderData() {
-        return <SafeAreaView>
+        return <SafeAreaView style={{flex: 1}}>
             <StatusBar
                 barStyle="light-content"
                 backgroundColor={config.colorPrimaryDark}
             />
+            <MainHeaderBar title={"玩安卓"}/>
             <UltimateListView
                 ref={ref => this.flatList = ref}
                 refreshable={true}

@@ -11,6 +11,7 @@ import FavoritePage from "./component/login/FavoritePage";
 import * as config from "./config"
 import TodoPage from "./component/login/TodoPage";
 import AboutPage from "./component/login/AboutPage";
+import SearchPage from "./component/SearchPage";
 
 const Main = createDrawerNavigator(
     {
@@ -28,20 +29,10 @@ const Main = createDrawerNavigator(
         drawerLockMode: "locked-open",
         initialRouteName: 'home',
         contentOptions: {},
-        navigationOptions: {
-            title: "WanAndroid",
-            headerRight: <TouchableWithoutFeedback
-                onPress={() => alert("to be completed...")}>
-                <Image
-                    source={require('../res/ic_search.png')}
-                    style={{height: 20, width: 20, marginRight: 20}}
-                />
-            </TouchableWithoutFeedback>,
-        }
     });
 
 const pages = {
-    Home: {screen: Main, navigationOptions: () => ({})},
+    Home: {screen: Main, navigationOptions: () => ({header: null})},
     Web: {screen: WebPage, navigationOptions: () => ({})},
     Knowledge: {screen: KnowledgePage, navigationOptions: () => ({})},
     Login: {screen: LoginPage, navigationOptions: () => ({})},
@@ -49,6 +40,7 @@ const pages = {
     Favorite: {screen: FavoritePage, navigationOptions: () => ({})},
     Todo: {screen: TodoPage, navigationOptions: () => ({})},
     About: {screen: AboutPage, navigationOptions: () => ({})},
+    Search: {screen: SearchPage, navigationOptions: () => ({})},
 };
 
 export default createAppContainer(createStackNavigator(pages, {

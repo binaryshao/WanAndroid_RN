@@ -6,15 +6,12 @@ import ErrorView from "../../widget/ErrorView";
 import EmptyView from "../../widget/EmptyView";
 import * as config from "../../config";
 import LineDivider from "../../widget/LineDivider";
+import MainHeaderBar from "../../widget/MainHeaderBar";
 
 const colors = ['orange', 'red', 'green', 'black', 'fuchsia', 'chocolate', 'hotpink', 'tomato'];
 let navigation;
 
 export default class App extends React.Component {
-
-    static navigationOptions = {
-        title: "网站导航",
-    };
 
     constructor(props) {
         super(props);
@@ -66,19 +63,22 @@ export default class App extends React.Component {
         } else if (this.state.data.length === 0) {
             return <EmptyView retry={this.retry.bind(this)}/>;
         }
-        return <View style={[config.container, {flexDirection: 'row'}]}>
-            <FlatList
-                data={this.state.data}
-                renderItem={this.renderLeftItem.bind(this)}
-                keyExtractor={(item, index) => index + ""}
-                ItemSeparatorComponent={LineDivider}
-            />
-            <FlatList
-                ref='rightFlatList'
-                data={this.state.data}
-                renderItem={this.renderRightItem}
-                keyExtractor={(item, index) => index + ""}
-            />
+        return <View style={{flex: 1}}>
+            <MainHeaderBar title={"网站导航"}/>
+            <View style={[config.container, {flexDirection: 'row'}]}>
+                <FlatList
+                    data={this.state.data}
+                    renderItem={this.renderLeftItem.bind(this)}
+                    keyExtractor={(item, index) => index + ""}
+                    ItemSeparatorComponent={LineDivider}
+                />
+                <FlatList
+                    ref='rightFlatList'
+                    data={this.state.data}
+                    renderItem={this.renderRightItem}
+                    keyExtractor={(item, index) => index + ""}
+                />
+            </View>
         </View>;
     }
 
