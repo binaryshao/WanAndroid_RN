@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     },
     login: {
-        width: 300,
-        height: 40,
-        margin: 20,
+        width: config.SCREEN_WIDTH * 0.7,
+        marginTop: 30,
+        padding: 15,
         backgroundColor: config.colorPrimary,
         borderRadius: 10,
         color: 'white',
