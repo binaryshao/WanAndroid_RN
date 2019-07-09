@@ -37,7 +37,7 @@ export default class App extends React.Component {
                     isLoadMoreFailed: false,
                     pageNo: this.state.pageNo + 1,
                     isAllLoaded: this.state.pageNo > result.pageCount,
-                    data: isLoadingMore?[...this.state.data, ...result.datas]:result.datas
+                    data: isLoadingMore ? [...this.state.data, ...result.datas] : result.datas
                 });
             })
             .catch(error => {
@@ -50,13 +50,23 @@ export default class App extends React.Component {
             });
     }
 
+    retry() {
+        this.setState({
+            isLoading: true,
+            pageNo: 1,
+        });
+        setTimeout(() => {
+            this.getData();
+        }, 500);
+    }
+
     render() {
         if (this.state.isLoading) {
             return <LoadingView/>;
         } else if (this.state.isError) {
-            return <ErrorView error={this.state.errorInfo}/>;
+            return <ErrorView error={this.state.errorInfo} retry={this.retry.bind(this)}/>;
         } else if (this.state.data.length === 0) {
-            return <EmptyView/>;
+            return <EmptyView retry={this.retry.bind(this)}/>;
         }
         return <FlatList
             data={this.state.data}
@@ -71,15 +81,14 @@ export default class App extends React.Component {
             />}
             onEndReached={() => {
                 if (!this.state.isAllLoaded) {
-                    this.setState({isLoadMoreFailed: false});
-                    this.getData(true);
+                    this.loadMore();
                 }
             }}
             ListFooterComponent={() => {
                 if (this.state.isAllLoaded) {
                     return <EndView/>;
                 } else if (this.state.isLoadMoreFailed) {
-                    return <ErrorView error={this.state.errorInfo}/>;
+                    return <ErrorView error={this.state.errorInfo} retry={this.loadMore.bind(this)}/>;
                 } else {
                     return <LoadingView size={'small'}/>;
                 }
@@ -87,5 +96,10 @@ export default class App extends React.Component {
             keyExtractor={(item, index) => index + ""}
             ItemSeparatorComponent={LineDivider}
         />
+    }
+
+    loadMore() {
+        this.setState({isLoadMoreFailed: false});
+        this.getData(true);
     }
 }

@@ -48,13 +48,22 @@ export default class App extends React.Component {
             });
     }
 
+    retry() {
+        this.setState({
+            isLoading: true,
+        });
+        setTimeout(() => {
+            this.getData();
+        }, 500);
+    }
+
     render() {
         if (this.state.isLoading) {
             return <LoadingView/>;
         } else if (this.state.isError) {
-            return <ErrorView error={this.state.errorInfo}/>;
+            return <ErrorView error={this.state.errorInfo} retry={this.retry.bind(this)}/>;
         } else if (this.state.data.length === 0) {
-            return <EmptyView/>;
+            return <EmptyView retry={this.retry.bind(this)}/>;
         }
         return <FlatList
             data={this.state.data}

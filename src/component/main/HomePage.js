@@ -41,7 +41,7 @@ export default class App extends React.Component {
         if (this.state.isLoading) {
             return <LoadingView/>;
         } else if (this.state.isError) {
-            return <ErrorView error={this.state.errorInfo}/>;
+            return <ErrorView error={this.state.errorInfo} retry={this.retry.bind(this)}/>;
         }
         return this.renderData();
     }
@@ -71,6 +71,16 @@ export default class App extends React.Component {
                 refreshableMode={Platform.OS === "ios" ? "advanced" : "basic"}
             />
         </SafeAreaView>
+    }
+
+    retry() {
+        this.setState({
+            isLoading: true,
+            pageNo: 0,
+        });
+        setTimeout(() => {
+            this.getData();
+        }, 500);
     }
 
     getData(page, postRefresh, endFetch) {
@@ -175,7 +185,7 @@ export default class App extends React.Component {
     }
 
     emptyView() {
-        return <EmptyView/>;
+        return <EmptyView retry={this.retry.bind(this)}/>;
     }
 
     separator() {
