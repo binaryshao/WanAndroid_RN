@@ -74,7 +74,10 @@ export default class App extends React.Component {
         }
         return <FlatList
             data={this.state.data}
-            renderItem={(info) => <ArticleItemView item={info.item}/>}
+            renderItem={(info) => {
+                info.item.collect = true;
+                return <ArticleItemView item={info.item}/>
+            }}
             refreshControl={<RefreshControl
                 onRefresh={() => {
                     this.state.pageNo = 0;

@@ -38,9 +38,15 @@ class App extends PureComponent {
                         {this.getDesc(item)}
                     </View>
                 </View>
-                <Text style={[styles.normalText, {marginTop: 5}]}>
-                    {item.superChapterName}/{item.chapterName}
-                </Text>
+                <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={[styles.normalText, {flex: 1}]}>
+                        {item.superChapterName}/{item.chapterName}
+                    </Text>
+                    <Image
+                        source={item.collect ? require("../../res/ic_favorite.png") : require("../../res/ic_favorite_not.png")}
+                        style={{width: 25, height: 25}}
+                    />
+                </View>
             </View>
         </TouchableNativeFeedback>
     }
