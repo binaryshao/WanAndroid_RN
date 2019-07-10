@@ -1,5 +1,4 @@
 import React from 'react';
-import {Image, TouchableWithoutFeedback} from 'react-native';
 import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 import MainPage from "./component/main/MainPage"
 import DrawerPage from "./component/DrawerPage"
@@ -12,6 +11,7 @@ import * as config from "./config"
 import TodoPage from "./component/login/TodoPage";
 import AboutPage from "./component/login/AboutPage";
 import SearchPage from "./component/SearchPage";
+import SearchResultPage from "./component/SearchResultPage";
 
 const Main = createDrawerNavigator(
     {
@@ -40,7 +40,8 @@ const pages = {
     Favorite: {screen: FavoritePage, navigationOptions: () => ({})},
     Todo: {screen: TodoPage, navigationOptions: () => ({})},
     About: {screen: AboutPage, navigationOptions: () => ({})},
-    Search: {screen: SearchPage, navigationOptions: () => ({})},
+    Search: {screen: SearchPage, navigationOptions: () => ({header: null})},
+    SearchResult: {screen: SearchResultPage, navigationOptions: () => ({})},
 };
 
 export default createAppContainer(createStackNavigator(pages, {
