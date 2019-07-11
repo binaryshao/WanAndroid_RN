@@ -3,8 +3,18 @@ import {StyleSheet, Text, View, Image, TouchableNativeFeedback} from "react-nati
 import {withNavigation} from 'react-navigation';
 
 import * as config from "../config";
+import AccountUtils from "../utils/AccountUtils";
+import HintUtils from "../utils/HintUtils";
+import HttpUtils from "../http/HttpUtils";
 
 class App extends PureComponent {
+
+    constructor() {
+        super();
+        this.state = {
+            refresh: false
+        }
+    }
 
     render() {
         const {navigation, item} = this.props;
@@ -42,13 +52,15 @@ class App extends PureComponent {
                     <Text style={[styles.normalText, {flex: 1}]}>
                         {item.superChapterName}/{item.chapterName}
                     </Text>
-                    <Image
-                        source={item.collect ? require("../../res/ic_favorite.png") : require("../../res/ic_favorite_not.png")}
-                        style={{width: 25, height: 25}}
-                    />
+                    <TouchableNativeFeedback onPress={this.switchFavorite.bind(this)}>
+                        <Image
+                            source={item.collect ? require("../../res/ic_favorite.png") : require("../../res/ic_favorite_not.png")}
+                            style={{width: 25, height: 25}}
+                        />
+                    </TouchableNativeFeedback>
                 </View>
             </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeFeedback>;
     }
 
     getImage(item) {
@@ -69,6 +81,27 @@ class App extends PureComponent {
             </Text>;
         } else {
             return null;
+        }
+    }
+
+    async switchFavorite() {
+        const name = await AccountUtils.getUserName();
+        if (name === null || name === '') {
+            this.props.navigation.navigate('Login');
+            HintUtils.toast("请先登录");
+        } else {
+            const cookie = await AccountUtils.getCookie();
+            const item = this.props.item;
+            HttpUtils.post('lg/' + (item.collect ? 'uncollect_originId/' : 'collect/') + item.id + '/json', {'Cookie': cookie})
+                .then(() => {
+                    HintUtils.toast(item.collect ? "已取消收藏" : "收藏成功");
+                    item.collect = !item.collect;
+                    this.setState({
+                        refresh: !this.state.refresh
+                    })
+                })
+                .catch(() => {
+                });
         }
     }
 }
