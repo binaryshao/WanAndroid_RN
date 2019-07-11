@@ -92,7 +92,13 @@ class App extends PureComponent {
         } else {
             const cookie = await AccountUtils.getCookie();
             const item = this.props.item;
-            HttpUtils.post('lg/' + (item.collect ? 'uncollect_originId/' : 'collect/') + item.id + '/json', {'Cookie': cookie})
+            let params = this.props.isFromFavorite ? {
+                'originId': item.originId ? item.originId : -1
+            } : {
+                'Cookie': cookie,
+            };
+            let unCollectPath = this.props.isFromFavorite ? 'uncollect/' : 'uncollect_originId/';
+            HttpUtils.post('lg/' + (item.collect ? unCollectPath : 'collect/') + item.id + '/json', params)
                 .then(() => {
                     HintUtils.toast(item.collect ? "已取消收藏" : "收藏成功");
                     item.collect = !item.collect;

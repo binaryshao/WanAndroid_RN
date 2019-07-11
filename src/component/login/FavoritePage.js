@@ -76,7 +76,7 @@ export default class App extends React.Component {
             data={this.state.data}
             renderItem={(info) => {
                 info.item.collect = true;
-                return <ArticleItemView item={info.item}/>
+                return <ArticleItemView item={info.item} isFromFavorite={true}/>
             }}
             refreshControl={<RefreshControl
                 onRefresh={() => {
