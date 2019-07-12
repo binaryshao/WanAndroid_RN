@@ -59,7 +59,12 @@ export default class App extends React.Component {
                 }
             })}
             {this.getItemView("待办", require('../../res/ic_todo.png'), () => {
-                this.props.navigation.navigate('Todo');
+                if (this.state.userName) {
+                    this.props.navigation.navigate('Todo');
+                } else {
+                    this.props.navigation.navigate('Login');
+                    HintUtils.toast("请先登录");
+                }
             })}
             {this.getItemView("关于", require('../../res/ic_about.png'), () => {
                 this.props.navigation.navigate('About');

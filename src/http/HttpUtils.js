@@ -30,7 +30,7 @@ function request(path, config) {
                 if (response.ok) {
                     if (response.headers.map.hasOwnProperty('set-cookie')) {
                         const cookie = response.headers.map['set-cookie'];
-                        console.log("cookie:" + cookie);
+                        HintUtils.logOrAlert("cookie:" + cookie);
                         saveCookie(cookie);
                     }
                     return response.json();
