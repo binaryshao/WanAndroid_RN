@@ -58,7 +58,7 @@ export default class App extends React.Component {
                     HintUtils.toast("请先登录");
                 }
             })}
-            {this.getItemView("待办", require('../../res/ic_todo.png'), () => {
+            {this.getItemView("任务清单", require('../../res/ic_todo.png'), () => {
                 if (this.state.userName) {
                     this.props.navigation.navigate('Todo');
                 } else {

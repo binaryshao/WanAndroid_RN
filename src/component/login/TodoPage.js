@@ -15,6 +15,7 @@ import HeaderBar from "../../widget/HeaderBar";
 import * as config from "../../config";
 import HintUtils from "../../utils/HintUtils";
 import EndView from "../../widget/EndView";
+import AccountUtils from "../../utils/AccountUtils";
 
 export default class App extends React.Component {
 
@@ -115,11 +116,11 @@ export default class App extends React.Component {
     renderHeader() {
         return <HeaderBar
             showBack={true}
-            title={"待办清单"}
+            title={"任务清单"}
             rightView={<View style={[config.container, {alignItems: 'flex-end',}]}>
                 <TouchableWithoutFeedback
                     onPress={() => {
-                        HintUtils.toast("跳转新页面，添加todo");
+                        this.editTodo("新建任务");
                     }}>
                     <Image
                         source={require('../../../res/ic_add.png')}
@@ -133,7 +134,7 @@ export default class App extends React.Component {
 
     renderItem = ({item}) => {
         return <TouchableNativeFeedback onPress={() => {
-            HintUtils.toast("跳转新页面，编辑todo");
+            this.editTodo("编辑任务", item);
         }}>
             <View style={styles.itemContainer}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -192,6 +193,13 @@ export default class App extends React.Component {
             }, 500)
             .catch(error => {
             })
+    }
+
+    editTodo(title, item) {
+        this.props.navigation.navigate('EditTodo', {
+            title: title,
+            item: item
+        })
     }
 }
 
