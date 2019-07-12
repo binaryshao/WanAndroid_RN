@@ -157,7 +157,7 @@ export default class App extends React.Component {
                     <TouchableWithoutFeedback
                         onPress={() => {
                             HintUtils.alert("删除任务", "确定要删除任务【" + item.title + "】吗？", () => {
-                                HintUtils.toast("调取接口删除todo，成功后刷新列表");
+                                this.deleteTodo(item.id);
                             })
                         }}>
                         <Image
@@ -173,6 +173,25 @@ export default class App extends React.Component {
     loadMore() {
         this.setState({isLoadMoreFailed: false});
         this.getData(true);
+    }
+
+    async deleteTodo(id) {
+        const cookie = await AccountUtils.getCookie();
+        let params = {
+            'Cookie': cookie,
+        };
+        HttpUtils.post('lg/todo/delete/' + id + '/json', params)
+            .then(() => {
+                HintUtils.toast("已删除");
+                this.setState({
+                    pageNo: 1
+                });
+                setTimeout(() => {
+                    this.getData();
+                })
+            }, 500)
+            .catch(error => {
+            })
     }
 }
 
