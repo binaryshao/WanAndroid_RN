@@ -51,7 +51,12 @@ export default class App extends React.Component {
                 </View>
             </TouchableNativeFeedback>
             {this.getItemView("收藏夹", require('../../res/ic_favorite_not.png'), () => {
-                this.props.navigation.navigate('Favorite');
+                if (this.state.userName) {
+                    this.props.navigation.navigate('Favorite');
+                } else {
+                    this.props.navigation.navigate('Login');
+                    HintUtils.toast("请先登录");
+                }
             })}
             {this.getItemView("待办", require('../../res/ic_todo.png'), () => {
                 this.props.navigation.navigate('Todo');
@@ -86,7 +91,8 @@ export default class App extends React.Component {
         HintUtils.toast("已退出登录");
         this.setState({
             userName: '',
-        })
+        });
+        DeviceEventEmitter.emit('logout');
     }
 }
 

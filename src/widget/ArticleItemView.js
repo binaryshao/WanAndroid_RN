@@ -1,11 +1,13 @@
 import React, {PureComponent} from "react";
-import {StyleSheet, Text, View, Image, TouchableNativeFeedback} from "react-native";
+import {StyleSheet, Text, View, Image, TouchableNativeFeedback, DeviceEventEmitter} from "react-native";
 import {withNavigation} from 'react-navigation';
 
 import * as config from "../config";
 import AccountUtils from "../utils/AccountUtils";
 import HintUtils from "../utils/HintUtils";
 import HttpUtils from "../http/HttpUtils";
+
+var logoutSubscription;
 
 class App extends PureComponent {
 
@@ -14,6 +16,23 @@ class App extends PureComponent {
         this.state = {
             refresh: false
         }
+    }
+
+    componentDidMount() {
+        this.mounted = true;
+        logoutSubscription = DeviceEventEmitter.addListener('logout', () => {
+            if (this.mounted) {
+                this.props.item.collect = false;
+                this.setState({
+                    refresh: !this.state.refresh
+                });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+        DeviceEventEmitter.removeSubscription(logoutSubscription);
     }
 
     render() {
@@ -91,20 +110,24 @@ class App extends PureComponent {
             HintUtils.toast("请先登录");
         } else {
             const cookie = await AccountUtils.getCookie();
-            const item = this.props.item;
-            let params = this.props.isFromFavorite ? {
+            const {isFromFavorite, item} = this.props;
+            let params = isFromFavorite ? {
                 'originId': item.originId ? item.originId : -1
             } : {
                 'Cookie': cookie,
             };
-            let unCollectPath = this.props.isFromFavorite ? 'uncollect/' : 'uncollect_originId/';
+            let unCollectPath = isFromFavorite ? 'uncollect/' : 'uncollect_originId/';
             HttpUtils.post('lg/' + (item.collect ? unCollectPath : 'collect/') + item.id + '/json', params)
                 .then(() => {
                     HintUtils.toast(item.collect ? "已取消收藏" : "收藏成功");
-                    item.collect = !item.collect;
-                    this.setState({
-                        refresh: !this.state.refresh
-                    })
+                    if (isFromFavorite) {
+                        DeviceEventEmitter.emit('switchFavorite');
+                    } else {
+                        item.collect = !item.collect;
+                        this.setState({
+                            refresh: !this.state.refresh
+                        });
+                    }
                 })
                 .catch(() => {
                 });

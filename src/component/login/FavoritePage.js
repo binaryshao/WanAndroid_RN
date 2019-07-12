@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, RefreshControl} from 'react-native';
+import {DeviceEventEmitter, FlatList, RefreshControl} from 'react-native';
 import HttpUtils from "../../http/HttpUtils";
 import LoadingView from "../../widget/LoadingView";
 import ErrorView from "../../widget/ErrorView";
@@ -8,6 +8,8 @@ import ArticleItemView from "../../widget/ArticleItemView";
 import LineDivider from "../../widget/LineDivider";
 import EndView from "../../widget/EndView";
 import * as config from "../../config";
+
+let favoriteSubscription;
 
 export default class App extends React.Component {
 
@@ -29,7 +31,19 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        favoriteSubscription = DeviceEventEmitter.addListener('switchFavorite', ()=>{
+            this.setState({
+                pageNo: 0,
+            });
+            setTimeout(() => {
+                this.getData();
+            }, 500);
+        });
         this.getData();
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeSubscription(favoriteSubscription);
     }
 
     getData(isLoadingMore) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Text, View, Image, Platform, StyleSheet,
-    TouchableNativeFeedback, SafeAreaView, StatusBar
+    TouchableNativeFeedback, SafeAreaView, StatusBar, DeviceEventEmitter
 } from 'react-native';
 import {UltimateListView} from "react-native-ultimate-listview";
 import Swiper from 'react-native-swiper';
@@ -14,6 +14,7 @@ import HttpUtils from "../../http/HttpUtils";
 import ArticleItemView from "../../widget/ArticleItemView"
 import MainHeaderBar from "../../widget/MainHeaderBar";
 
+let loginSubscription, favoriteSubscription;
 
 export default class App extends React.Component {
 
@@ -31,7 +32,14 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        loginSubscription = DeviceEventEmitter.addListener('login', this.retry.bind(this));
+        favoriteSubscription = DeviceEventEmitter.addListener('switchFavorite', this.retry.bind(this));
         this.getData();
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeSubscription(loginSubscription);
+        DeviceEventEmitter.removeSubscription(favoriteSubscription);
     }
 
     render() {

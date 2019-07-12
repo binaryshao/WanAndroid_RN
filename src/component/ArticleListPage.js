@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, RefreshControl} from 'react-native';
+import {DeviceEventEmitter, FlatList, RefreshControl} from 'react-native';
 import HttpUtils from "../http/HttpUtils";
 import LoadingView from "../widget/LoadingView";
 import ErrorView from "../widget/ErrorView";
@@ -8,6 +8,8 @@ import ArticleItemView from "../widget/ArticleItemView";
 import LineDivider from "../widget/LineDivider";
 import EndView from "../widget/EndView";
 import * as config from "../config";
+
+let loginSubscription, favoriteSubscription;
 
 export default class App extends React.Component {
 
@@ -25,7 +27,14 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        loginSubscription = DeviceEventEmitter.addListener('login', this.retry.bind(this));
+        favoriteSubscription = DeviceEventEmitter.addListener('switchFavorite', this.retry.bind(this));
         this.getData();
+    }
+
+    componentWillUnmount() {
+        DeviceEventEmitter.removeSubscription(loginSubscription);
+        DeviceEventEmitter.removeSubscription(favoriteSubscription);
     }
 
     getData(isLoadingMore) {
