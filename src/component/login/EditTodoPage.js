@@ -1,5 +1,8 @@
 import React from 'react';
-import {View, Text, Image, TextInput, TouchableOpacity, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {
+    View, Text, Image, TextInput, TouchableOpacity,
+    StyleSheet, DeviceEventEmitter, ScrollView
+} from 'react-native';
 import HintUtils from "../../utils/HintUtils";
 import HttpUtils from "../../http/HttpUtils";
 import * as config from "../../config";
@@ -24,55 +27,58 @@ export default class App extends React.Component {
 
     render() {
         const {item} = this.props;
-        return <View style={config.container}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={[styles.desc]}>
-                    标题 :
-                </Text>
-                <TextInput
-                    placeholder={"必填"}
-                    defaultValue={item ? item.title : ''}
-                    style={styles.input}
-                    onChangeText={(text) => {
-                        this.setState({title: text})
-                    }}
-                />
-            </View>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={[styles.desc]}>
-                    内容 :
-                </Text>
-                <TextInput
-                    placeholder={"必填"}
-                    defaultValue={item ? item.content : ''}
-                    style={styles.input}
-                    onChangeText={(text) => {
-                        this.setState({content: text})
-                    }}
-                />
-            </View>
-            <TouchableOpacity onPress={() => {
-                HintUtils.toast("时间选择器");
-            }}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
+        return <ScrollView>
+            <View style={[config.container]}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={[styles.desc]}>
-                        完成时间 :
+                        标题 :
                     </Text>
-                    <Text style={styles.time}>
-                        {item ? item.dateStr : "当天"}
-                    </Text>
-                    <Image
-                        source={require('../../../res/ic_right_arrow.png')}
-                        style={{height: 20, width: 20, marginRight: 20}}
+                    <TextInput
+                        placeholder={"必填"}
+                        value={item ? item.title : ''}
+                        style={styles.input}
+                        onChangeText={(text) => {
+                            this.setState({title: text})
+                        }}
                     />
                 </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.state.isLoading ? null : this.submit.bind(this)}>
-                <Text style={styles.submit}>
-                    提交
-                </Text>
-            </TouchableOpacity>
-        </View>;
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.desc]}>
+                        内容 :
+                    </Text>
+                    <TextInput
+                        placeholder={"必填"}
+                        value={item ? item.content : ''}
+                        style={[styles.input, {height: 200}]}
+                        onChangeText={(text) => {
+                            this.setState({content: text})
+                        }}
+                    />
+                </View>
+                <TouchableOpacity onPress={() => {
+                    HintUtils.toast("时间选择器");
+                }}>
+                    <View
+                        style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
+                        <Text style={[styles.desc]}>
+                            完成时间 :
+                        </Text>
+                        <Text style={styles.time}>
+                            {item ? item.dateStr : "当天"}
+                        </Text>
+                        <Image
+                            source={require('../../../res/ic_right_arrow.png')}
+                            style={{height: 15, width: 15}}
+                        />
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.state.isLoading ? null : this.submit.bind(this)}>
+                    <Text style={styles.submit}>
+                        提交
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>;
     }
 
     submit() {
@@ -86,8 +92,7 @@ export default class App extends React.Component {
             this.setState({
                 isLoading: true
             });
-            HttpUtils.post("", {
-            })
+            HttpUtils.post("", {})
                 .then(result => {
                     HintUtils.toast("成功");
                     DeviceEventEmitter.emit('');
@@ -113,9 +118,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         margin: 10,
         borderColor: 'lightgrey',
-        borderWidth: 1,
-        borderRadius: 4,
-        paddingLeft: 10
+        padding: 10,
+        borderBottomWidth: 1,
     },
     submit: {
         width: config.SCREEN_WIDTH * 0.7,
