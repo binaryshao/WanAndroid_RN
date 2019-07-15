@@ -5,7 +5,7 @@ import {
     FlatList,
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
-    Image, StyleSheet, RefreshControl
+    Image, StyleSheet, RefreshControl, DeviceEventEmitter
 } from 'react-native';
 import HttpUtils from "../../http/HttpUtils";
 import LoadingView from "../../widget/LoadingView";
@@ -16,6 +16,8 @@ import * as config from "../../config";
 import HintUtils from "../../utils/HintUtils";
 import EndView from "../../widget/EndView";
 import AccountUtils from "../../utils/AccountUtils";
+
+let todoSubscription;
 
 export default class App extends React.Component {
 
@@ -33,8 +35,22 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        todoSubscription = DeviceEventEmitter.addListener('Todo', this.refresh);
         this.getData();
     }
+
+    componentWillUnmount(){
+        DeviceEventEmitter.removeSubscription(todoSubscription);
+    }
+
+    refresh = () => {
+        this.setState({
+            pageNo: 1,
+        });
+        setTimeout(() => {
+            this.getData();
+        }, 500);
+    };
 
     getData(isLoadingMore) {
         HttpUtils.get("lg/todo/v2/list/" + this.state.pageNo + '/json', null)
@@ -120,7 +136,7 @@ export default class App extends React.Component {
             rightView={<View style={[config.container, {alignItems: 'flex-end',}]}>
                 <TouchableWithoutFeedback
                     onPress={() => {
-                        this.editTodo("新建任务");
+                        this.editTodo();
                     }}>
                     <Image
                         source={require('../../../res/ic_add.png')}
@@ -134,7 +150,7 @@ export default class App extends React.Component {
 
     renderItem = ({item}) => {
         return <TouchableNativeFeedback onPress={() => {
-            this.editTodo("编辑任务", item);
+            this.editTodo(false, item);
         }}>
             <View style={styles.itemContainer}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -195,9 +211,9 @@ export default class App extends React.Component {
             })
     }
 
-    editTodo(title, item) {
+    editTodo(isAdd = true, item) {
         this.props.navigation.navigate('EditTodo', {
-            title: title,
+            isAdd: isAdd,
             item: item
         })
     }

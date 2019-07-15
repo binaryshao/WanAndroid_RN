@@ -1,19 +1,20 @@
 import React from 'react';
 import {
     View, Text, Image, TextInput, TouchableOpacity,
-    StyleSheet, DeviceEventEmitter, ScrollView
+    StyleSheet, DeviceEventEmitter, ScrollView, Switch
 } from 'react-native';
+import DateTimePicker from "react-native-modal-datetime-picker";
 import HintUtils from "../../utils/HintUtils";
 import HttpUtils from "../../http/HttpUtils";
 import * as config from "../../config";
 
-let item;
+let item, isAdd;
 
 export default class App extends React.Component {
 
     static navigationOptions = ({navigation}) => {
         return {
-            title: navigation.getParam('title', ''),
+            title: navigation.getParam('isAdd') ? "新建任务" : "编辑任务"
         };
     };
 
@@ -22,10 +23,14 @@ export default class App extends React.Component {
         this.state = {
             title: '',
             content: '',
-            time: this.getToday(),
+            dateStr: this.getToday(),
             isLoading: false,
+            showPicker: false,
+            date: new Date(),
+            isCompleted: false
         };
         item = this.props.navigation.getParam('item');
+        isAdd = this.props.navigation.getParam('isAdd');
     }
 
     componentDidMount() {
@@ -33,7 +38,9 @@ export default class App extends React.Component {
             this.setState({
                 title: item.title,
                 content: item.content,
-                time: item.dateStr,
+                dateStr: item.dateStr,
+                date: new Date(item.dateStr),
+                isCompleted: item.status === 1,
             })
         }
     }
@@ -50,7 +57,7 @@ export default class App extends React.Component {
                             this.setState({title: text})
                         }}
                         placeholder={"必填"}
-                        defaultValue={item ? item.title : ''}
+                        defaultValue={this.state.title}
                         clearButtonMode={'always'}
                         numberOfLines={1}
                         style={styles.input}
@@ -65,7 +72,7 @@ export default class App extends React.Component {
                             this.setState({content: text})
                         }}
                         placeholder={"必填"}
-                        defaultValue={item ? item.content : ''}
+                        defaultValue={this.state.content}
                         clearButtonMode={'always'}
                         multiline={true}
                         style={[styles.input, {
@@ -76,15 +83,16 @@ export default class App extends React.Component {
                     />
                 </View>
                 <TouchableOpacity onPress={() => {
-                    HintUtils.toast("时间选择器");
+                    this.showPicker();
                 }}>
                     <View
-                        style={[styles.row, {marginTop: 20}]}>
+                        style={[styles.row]}>
                         <Text style={[styles.desc]}>
                             完成时间 :
                         </Text>
-                        <Text style={styles.time}>
-                            {item ? item.dateStr : this.getToday()}
+                        <Text
+                            style={styles.dateStr}>
+                            {this.state.dateStr}
                         </Text>
                         <Image
                             source={require('../../../res/ic_right_arrow.png')}
@@ -92,6 +100,20 @@ export default class App extends React.Component {
                         />
                     </View>
                 </TouchableOpacity>
+                {isAdd ? null :
+                    <View style={styles.row}>
+                        <Text style={[styles.desc]}>
+                            是否已完成 :
+                        </Text>
+                        <Switch
+                            style={{marginLeft: 10}}
+                            onValueChange={value => {
+                                this.setState({isCompleted: value})
+                            }}
+                            value={this.state.isCompleted}
+                        />
+                    </View>
+                }
                 <View style={{flex: 1, alignItems: 'center', marginTop: 50,}}>
                     <TouchableOpacity onPress={this.state.isLoading ? null : this.submit.bind(this)}>
                         <Text style={styles.submit}>
@@ -99,30 +121,67 @@ export default class App extends React.Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                <DateTimePicker
+                    isVisible={this.state.showPicker}
+                    date={this.state.date}
+                    onConfirm={this.setDate}
+                    onCancel={this.hidePicker}
+                />
             </View>
         </ScrollView>;
     }
 
     getToday() {
-        const date = new Date();
+        return this.getDateStr(new Date());
+    }
+
+    getDateStr(date) {
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
+
+    setDate = date => {
+        this.setState({
+            date: date,
+            dateStr: this.getDateStr(date),
+        });
+        this.hidePicker();
+    };
+
+    showPicker = () => {
+        this.setState({showPicker: true});
+    };
+
+    hidePicker = () => {
+        this.setState({showPicker: false});
+    };
 
     submit() {
         if (this.state.title === '') {
             HintUtils.toast("请输入标题");
         } else if (this.state.content === '') {
             HintUtils.toast("请输入内容");
-        } else if (this.state.time === '') {
+        } else if (this.state.dateStr === '') {
             HintUtils.toast("请选择完成时间");
         } else {
             this.setState({
                 isLoading: true
             });
-            HttpUtils.post("", {})
+            let path, params;
+            params = {
+                title: this.state.title,
+                content: this.state.content,
+                date: this.state.dateStr,
+            };
+            if (isAdd) {
+                path = 'lg/todo/add/json';
+            } else {
+                path = 'lg/todo/update/' + item.id + '/json';
+                params.status = this.state.isCompleted ? 1 : 0;
+            }
+            HttpUtils.post(path, params)
                 .then(result => {
-                    HintUtils.toast("成功");
-                    DeviceEventEmitter.emit('');
+                    HintUtils.toast(isAdd ? "新增成功" : "编辑成功");
+                    DeviceEventEmitter.emit('Todo');
                     this.props.navigation.pop();
                 })
                 .finally(() => {
@@ -138,7 +197,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 20
     },
     desc: {
         color: config.textColorPrimary,
@@ -160,7 +219,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
     },
-    time: {
+    dateStr: {
         flex: 1,
         marginLeft: 10,
         color: config.textColorSecondary,
