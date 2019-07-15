@@ -7,6 +7,8 @@ import HintUtils from "../../utils/HintUtils";
 import HttpUtils from "../../http/HttpUtils";
 import * as config from "../../config";
 
+let item;
+
 export default class App extends React.Component {
 
     static navigationOptions = ({navigation}) => {
@@ -20,65 +22,90 @@ export default class App extends React.Component {
         this.state = {
             title: '',
             content: '',
-            time: '',
+            time: this.getToday(),
             isLoading: false,
         };
+        item = this.props.navigation.getParam('item');
+    }
+
+    componentDidMount() {
+        if (item) {
+            this.setState({
+                title: item.title,
+                content: item.content,
+                time: item.dateStr,
+            })
+        }
     }
 
     render() {
-        const {item} = this.props;
         return <ScrollView>
-            <View style={[config.container]}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={[config.container, {alignItems: 'stretch', padding: 10}]}>
+                <View style={[styles.row]}>
                     <Text style={[styles.desc]}>
                         标题 :
                     </Text>
                     <TextInput
-                        placeholder={"必填"}
-                        value={item ? item.title : ''}
-                        style={styles.input}
                         onChangeText={(text) => {
                             this.setState({title: text})
                         }}
+                        placeholder={"必填"}
+                        defaultValue={item ? item.title : ''}
+                        clearButtonMode={'always'}
+                        numberOfLines={1}
+                        style={styles.input}
                     />
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={[styles.row]}>
                     <Text style={[styles.desc]}>
                         内容 :
                     </Text>
                     <TextInput
-                        placeholder={"必填"}
-                        value={item ? item.content : ''}
-                        style={[styles.input, {height: 200}]}
                         onChangeText={(text) => {
                             this.setState({content: text})
                         }}
+                        placeholder={"必填"}
+                        defaultValue={item ? item.content : ''}
+                        clearButtonMode={'always'}
+                        multiline={true}
+                        style={[styles.input, {
+                            height: 100,
+                            textAlign: 'left',
+                            textAlignVertical: 'center',
+                        }]}
                     />
                 </View>
                 <TouchableOpacity onPress={() => {
                     HintUtils.toast("时间选择器");
                 }}>
                     <View
-                        style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
+                        style={[styles.row, {marginTop: 20}]}>
                         <Text style={[styles.desc]}>
                             完成时间 :
                         </Text>
                         <Text style={styles.time}>
-                            {item ? item.dateStr : "当天"}
+                            {item ? item.dateStr : this.getToday()}
                         </Text>
                         <Image
                             source={require('../../../res/ic_right_arrow.png')}
-                            style={{height: 15, width: 15}}
+                            style={{height: 12, width: 12}}
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.state.isLoading ? null : this.submit.bind(this)}>
-                    <Text style={styles.submit}>
-                        提交
-                    </Text>
-                </TouchableOpacity>
+                <View style={{flex: 1, alignItems: 'center', marginTop: 50,}}>
+                    <TouchableOpacity onPress={this.state.isLoading ? null : this.submit.bind(this)}>
+                        <Text style={styles.submit}>
+                            {this.state.isLoading ? "提交中..." : "提交"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </ScrollView>;
+    }
+
+    getToday() {
+        const date = new Date();
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
 
     submit() {
@@ -87,7 +114,7 @@ export default class App extends React.Component {
         } else if (this.state.content === '') {
             HintUtils.toast("请输入内容");
         } else if (this.state.time === '') {
-            HintUtils.toast("请选择时间");
+            HintUtils.toast("请选择完成时间");
         } else {
             this.setState({
                 isLoading: true
@@ -108,22 +135,24 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10
+    },
     desc: {
         color: config.textColorPrimary,
         fontSize: 16
     },
     input: {
-        width: config.SCREEN_WIDTH * 0.8,
-        height: 50,
+        flex: 1,
         backgroundColor: 'white',
-        margin: 10,
+        marginLeft: 10,
         borderColor: 'lightgrey',
-        padding: 10,
         borderBottomWidth: 1,
     },
     submit: {
         width: config.SCREEN_WIDTH * 0.7,
-        marginTop: 30,
         padding: 15,
         backgroundColor: config.colorPrimary,
         borderRadius: 10,
@@ -132,6 +161,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     time: {
+        flex: 1,
+        marginLeft: 10,
         color: config.textColorSecondary,
         fontSize: 14,
     },

@@ -22,7 +22,7 @@ export default class HintUtils {
     static toast(msg) {
         Toast.show(msg, {
             position: Toast.positions.CENTER,
-            duration: Toast.durations.LONG,
+            duration: Toast.durations.SHORT,
             backgroundColor: 'black',
             opacity: 0.7,
             animation: true,
