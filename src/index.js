@@ -9,7 +9,7 @@ import RegisterPage from "./component/login/RegisterPage";
 import FavoritePage from "./component/login/FavoritePage";
 import * as config from "./config"
 import TodoPage from "./component/login/TodoPage";
-import AboutPage from "./component/login/AboutPage";
+import AboutPage from "./component/AboutPage";
 import EditTodoPage from "./component/login/EditTodoPage";
 import SearchPage from "./component/SearchPage";
 import SearchResultPage from "./component/SearchResultPage";
