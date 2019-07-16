@@ -22,15 +22,15 @@ async function saveCookie(cookie) {
 
 function request(path, config) {
     let url = getRequestUrl(path);
-    HintUtils.logOrAlert(config.method + "请求：" + url + "\n参数：\n" + JSON.stringify(config, null, "\t"));
+    HintUtils.logOrAlert(`${config.method}请求：${url}\n参数：\n${JSON.stringify(config, null, "\t")}`);
     let request = new Promise((resolve, reject) => {
         fetch(url, config)
             .then(response => {
-                HintUtils.logOrAlert(url + " 原始返回如下：\n" + JSON.stringify(response, null, "\t"));
+                HintUtils.logOrAlert(`${url} 原始返回如下：\n${JSON.stringify(response, null, "\t")}`);
                 if (response.ok) {
                     if (response.headers.map.hasOwnProperty('set-cookie')) {
                         const cookie = response.headers.map['set-cookie'];
-                        HintUtils.logOrAlert("cookie:" + cookie);
+                        HintUtils.logOrAlert(`cookie：${cookie}`);
                         saveCookie(cookie);
                     }
                     return response.json();
@@ -42,12 +42,12 @@ function request(path, config) {
                 }
             })
             .then(json => {
-                HintUtils.logOrAlert(url + " json返回如下：\n" + JSON.stringify(json, null, "\t"));
+                HintUtils.logOrAlert(`${url} json返回如下：\n${JSON.stringify(json, null, "\t")}`);
                 if (json) {
                     if (json.errorCode.toString() === '0') {
                         resolve(json.data);
                     } else {
-                        let msg = "业务失败：" + json.errorMsg;
+                        let msg = `业务失败：${json.errorMsg}`;
                         HintUtils.logOrAlert(msg);
                         HintUtils.toast(msg);
                         reject(msg);
@@ -55,7 +55,7 @@ function request(path, config) {
                 }
             })
             .catch(error => {
-                let msg = "请求出错：" + error;
+                let msg = `请求出错：${error}`;
                 HintUtils.logOrAlert(msg);
                 HintUtils.toast(msg);
                 reject(msg);

@@ -175,7 +175,7 @@ export default class App extends React.Component {
                     </Text>
                     <TouchableWithoutFeedback
                         onPress={() => {
-                            HintUtils.alert("删除任务", "确定要删除任务【" + item.title + "】吗？", () => {
+                            HintUtils.alert("删除任务", `确定要删除任务【${item.title}】吗？`, () => {
                                 this.deleteTodo(item.id);
                             })
                         }}>
