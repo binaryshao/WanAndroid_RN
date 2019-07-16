@@ -16,7 +16,8 @@
     "react-native-swiper": "^1.5.14",
     "react-native-ultimate-listview": "^3.3.0",
     "react-native-webview": "^5.12.1",
-    "react-navigation": "3.11.0"
+    "react-navigation": "3.11.0",
+    "prop-types": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

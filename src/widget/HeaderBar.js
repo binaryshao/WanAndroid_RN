@@ -2,8 +2,16 @@ import React from 'react';
 import {View, Text, Image, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import * as config from "../config";
 import {withNavigation} from 'react-navigation';
+import PropTypes from "prop-types";
 
 class App extends React.Component {
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        showBack: PropTypes.bool,
+        rightView: PropTypes.element,
+        onBack: PropTypes.func,
+    };
 
     render() {
         return <View style={styles.container}>
