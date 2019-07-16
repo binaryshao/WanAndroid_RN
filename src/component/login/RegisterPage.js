@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import HintUtils from "../../utils/HintUtils";
 import HttpUtils from "../../http/HttpUtils";
 import * as config from "../../config";
@@ -21,41 +21,43 @@ export default class App extends React.Component {
     }
 
     render() {
-        return <View style={config.container}>
-            <TextInput
-                placeholder={"请输入用户名"}
-                style={styles.input}
-                onChangeText={(text) => {
-                    this.setState({userName: text})
-                }}
-            />
-            <TextInput
-                placeholder={"请输入密码"}
-                style={styles.input}
-                onChangeText={(text) => {
-                    this.setState({password: text})
-                }}
-            />
-            <TextInput
-                placeholder={"请再次输入密码"}
-                style={styles.input}
-                onChangeText={(text) => {
-                    this.setState({passwordAgain: text})
-                }}
-            />
-            <TouchableOpacity onPress={this.state.isLoading ? null : this.register.bind(this)}>
-                <Text style={styles.register}>
-                    {this.state.isLoading ? "注册中..." : "注册"}
-                </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate("Login");
-            }}>
-                <Text style={styles.login}>
-                    已经有账号？点击去登录
-                </Text>
-            </TouchableOpacity>
-        </View>;
+        return <ScrollView>
+            <View style={config.container}>
+                <TextInput
+                    placeholder={"请输入用户名"}
+                    style={styles.input}
+                    onChangeText={(text) => {
+                        this.setState({userName: text})
+                    }}
+                />
+                <TextInput
+                    placeholder={"请输入密码"}
+                    style={styles.input}
+                    onChangeText={(text) => {
+                        this.setState({password: text})
+                    }}
+                />
+                <TextInput
+                    placeholder={"请再次输入密码"}
+                    style={styles.input}
+                    onChangeText={(text) => {
+                        this.setState({passwordAgain: text})
+                    }}
+                />
+                <TouchableOpacity onPress={this.state.isLoading ? null : this.register.bind(this)}>
+                    <Text style={styles.register}>
+                        {this.state.isLoading ? "注册中..." : "注册"}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    this.props.navigation.navigate("Login");
+                }}>
+                    <Text style={styles.login}>
+                        已经有账号？点击去登录
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>;
     }
 
     register() {

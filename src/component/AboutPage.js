@@ -19,7 +19,7 @@ export default class App extends React.Component {
                 <Text style={styles.title}>业务内容</Text>
                 {this.getContent("几乎对接了玩安卓的所有 API，主要包括以下内容：")}
                 {this.getContent("- 注册、登录")}
-                {this.getContent("- 收藏、取消收藏、")}
+                {this.getContent("- 收藏、取消收藏")}
                 {this.getContent("- 新增、编辑待办任务")}
                 {this.getContent("- 查看、搜索各类项目和文章")}
                 {this.getContent("- 网站导航、知识体系、公众号")}
@@ -30,7 +30,7 @@ export default class App extends React.Component {
                 {this.getContent("react-native-modal-datetime-picker：时间选择器")}
                 {this.getContent("react-native-root-toast：吐司")}
                 {this.getContent("react-native-swiper：banner")}
-                {this.getContent("react-native-ultimate-listview: 列表，从某些角度来看并不好用")}
+                {this.getContent("react-native-ultimate-listview：列表，从某些角度来看并不好用")}
 
 
                 <Text style={styles.title}>感谢</Text>
@@ -38,8 +38,8 @@ export default class App extends React.Component {
 
                 <Text style={styles.title}>项目地址</Text>
                 {this.getLink("GitHub", 'https://github.com/Sbingo/WanAndroid_RN')}
-                {this.getContent("如果发现 bug，欢迎大家发起 issue 或提交 PR")}
                 {this.getContent("如果觉得项目还不错，点个 star 鼓励下作者吧 o(╥﹏╥)o")}
+                {this.getContent("也欢迎大家发起 issue 或提交 PR")}
             </View>
         </ScrollView>
     }

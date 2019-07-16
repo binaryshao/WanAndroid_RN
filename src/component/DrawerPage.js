@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, TouchableNativeFeedback, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {View,ScrollView, Image, Text, TouchableNativeFeedback, StyleSheet, DeviceEventEmitter} from 'react-native';
 import * as config from "../config"
 import HintUtils from "../utils/HintUtils";
 import AccountUtils from "../utils/AccountUtils";
@@ -35,7 +35,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        return <View>
+        return <ScrollView>
             <TouchableNativeFeedback onPress={() => {
                 if (this.state.userName) {
                     HintUtils.toast('你好...' + this.state.userName)
@@ -77,7 +77,7 @@ export default class App extends React.Component {
                         })
                 });
             }) : null}
-        </View>
+        </ScrollView>
     }
 
     getItemView(action, image, onPress) {
