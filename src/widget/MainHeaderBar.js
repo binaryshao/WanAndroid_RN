@@ -11,20 +11,24 @@ class App extends React.Component {
             leftView={
                 <TouchableWithoutFeedback
                     onPress={() => this.props.navigation.toggleDrawer()}>
-                    <Image
-                        source={require('../../res/ic_drawer.png')}
-                        style={{height: 18, width: 18, marginLeft: 20,}}
-                    />
+                    <View style={{paddingLeft: 20, justifyContent: 'center'}}>
+                        <Image
+                            source={require('../../res/ic_drawer.png')}
+                            style={{height: 16, width: 16,}}
+                        />
+                    </View>
                 </TouchableWithoutFeedback>
             }
             rightView={
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'stretch'}}>
                     <TouchableWithoutFeedback
                         onPress={() => this.props.navigation.navigate('Search')}>
-                        <Image
-                            source={require('../../res/ic_search.png')}
-                            style={{height: 20, width: 20, marginRight: 20}}
-                        />
+                        <View style={{justifyContent: 'center'}}>
+                            <Image
+                                source={require('../../res/ic_search.png')}
+                                style={{height: 20, width: 20, marginRight: 20}}
+                            />
+                        </View>
                     </TouchableWithoutFeedback>
                 </View>
             }

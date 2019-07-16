@@ -39,7 +39,7 @@ export default class App extends React.Component {
         this.getData();
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         DeviceEventEmitter.removeSubscription(todoSubscription);
     }
 
@@ -133,15 +133,17 @@ export default class App extends React.Component {
         return <HeaderBar
             showBack={true}
             title={"任务清单"}
-            rightView={<View style={[config.container, {alignItems: 'flex-end',}]}>
+            rightView={<View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'stretch'}}>
                 <TouchableWithoutFeedback
                     onPress={() => {
                         this.editTodo();
                     }}>
-                    <Image
-                        source={require('../../../res/ic_add.png')}
-                        style={{height: 20, width: 20, marginRight: 20}}
-                    />
+                    <View style={{justifyContent: 'center'}}>
+                        <Image
+                            source={require('../../../res/ic_add.png')}
+                            style={{height: 20, width: 20, marginRight: 20}}
+                        />
+                    </View>
                 </TouchableWithoutFeedback>
             </View>
             }

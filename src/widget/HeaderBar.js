@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 class App extends React.Component {
 
     static propTypes = {
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         showBack: PropTypes.bool,
         leftView: PropTypes.element,
         rightView: PropTypes.element,
@@ -19,9 +19,11 @@ class App extends React.Component {
         return <View style={styles.container}>
             {leftView ? leftView : null}
             {showBack ? <TouchableWithoutFeedback onPress={this.goBack.bind(this)}>
-                <Image source={require('../../res/ic_back.png')}
-                       style={styles.back}
-                       resizeMode='cover'/>
+                <View style={{justifyContent: 'center'}}>
+                    <Image source={require('../../res/ic_back.png')}
+                           style={styles.back}
+                           resizeMode='cover'/>
+                </View>
             </TouchableWithoutFeedback> : null}
             <Text style={[styles.title, {marginLeft: (showBack || leftView) ? 35 : 20,}]}
                   numberOfLines={1}
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     container: {
         height: 55,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'stretch',
         backgroundColor: config.colorPrimary,
     },
     back: {
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
+        textAlignVertical: 'center',
     },
 });
 

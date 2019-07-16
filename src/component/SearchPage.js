@@ -87,7 +87,7 @@ export default class App extends React.Component {
     renderHeader() {
         return <HeaderBar
             showBack={true}
-            rightView={<View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+            rightView={<View style={{flex: 1, flexDirection: 'row', alignItems: 'stretch'}}>
                 <TextInput placeholder={"请输入搜索内容..."}
                            placeholderTextColor={'lightgray'}
                            selectionColor={'red'}
@@ -103,10 +103,12 @@ export default class App extends React.Component {
                     onPress={() => {
                         this.search(this.state.keywords);
                     }}>
-                    <Image
-                        source={require('../../res/ic_search.png')}
-                        style={{height: 20, width: 20, marginRight: 20}}
-                    />
+                    <View style={{justifyContent: 'center'}}>
+                        <Image
+                            source={require('../../res/ic_search.png')}
+                            style={{height: 20, width: 20, marginRight: 20}}
+                        />
+                    </View>
                 </TouchableWithoutFeedback>
             </View>
             }
