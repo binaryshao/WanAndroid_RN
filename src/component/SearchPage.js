@@ -4,7 +4,7 @@ import {
     Text,
     FlatList,
     TextInput,
-    TouchableNativeFeedback,
+    TouchableHighlight,
     TouchableWithoutFeedback,
     Image, StyleSheet
 } from 'react-native';
@@ -123,13 +123,13 @@ export default class App extends React.Component {
             <View style={styles.contentContainer}>
                 {item.map((value) => {
                     let color = colors[Math.ceil(Math.random() * (colors.length - 1))];
-                    return <TouchableNativeFeedback onPress={() => {
+                    return <TouchableHighlight onPress={() => {
                         this.search(value.name);
                     }}>
                         <Text style={[styles.content, {color: color}]}>
                             {value.name}
                         </Text>
-                    </TouchableNativeFeedback>
+                    </TouchableHighlight>
                 })}
             </View>
         </View>

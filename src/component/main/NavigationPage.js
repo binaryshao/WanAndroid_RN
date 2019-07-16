@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, TouchableNativeFeedback, TouchableWithoutFeedback, StyleSheet} from 'react-native';
+import {View, Text, FlatList, TouchableHighlight, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import HttpUtils from "../../http/HttpUtils";
 import LoadingView from "../../widget/LoadingView";
 import ErrorView from "../../widget/ErrorView";
@@ -100,7 +100,7 @@ export default class App extends React.Component {
             <View style={styles.contentContainer}>
                 {item.articles.map((value, index) => {
                     let color = colors[index % (colors.length)];
-                    return <TouchableNativeFeedback onPress={() => {
+                    return <TouchableHighlight onPress={() => {
                         navigation.navigate('Web', {
                             title: value.title,
                             url: value.link,
@@ -111,7 +111,7 @@ export default class App extends React.Component {
                                 {value.title}
                             </Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableHighlight>
                 })}
             </View>
         </View>

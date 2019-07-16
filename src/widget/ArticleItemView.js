@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {StyleSheet, Text, View, Image, TouchableNativeFeedback, DeviceEventEmitter} from "react-native";
+import {StyleSheet, Text, View, Image, TouchableHighlight, DeviceEventEmitter} from "react-native";
 import {withNavigation} from 'react-navigation';
 
 import * as config from "../config";
@@ -37,7 +37,7 @@ class App extends PureComponent {
 
     render() {
         const {navigation, item} = this.props;
-        return <TouchableNativeFeedback onPress={() => {
+        return <TouchableHighlight onPress={() => {
             navigation.navigate('Web', {
                 url: item.link,
                 title: item.title
@@ -71,15 +71,15 @@ class App extends PureComponent {
                     <Text style={[styles.normalText, {flex: 1}]}>
                         {item.superChapterName}/{item.chapterName}
                     </Text>
-                    <TouchableNativeFeedback onPress={this.switchFavorite.bind(this)}>
+                    <TouchableHighlight onPress={this.switchFavorite.bind(this)}>
                         <Image
                             source={item.collect ? require("../../res/ic_favorite.png") : require("../../res/ic_favorite_not.png")}
                             style={{width: 25, height: 25}}
                         />
-                    </TouchableNativeFeedback>
+                    </TouchableHighlight>
                 </View>
             </View>
-        </TouchableNativeFeedback>;
+        </TouchableHighlight>;
     }
 
     getImage(item) {

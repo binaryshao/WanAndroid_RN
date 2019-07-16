@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import {View, Text, FlatList, TouchableHighlight, StyleSheet} from 'react-native';
 import HttpUtils from "../../http/HttpUtils";
 import LoadingView from "../../widget/LoadingView";
 import ErrorView from "../../widget/ErrorView";
@@ -73,7 +73,7 @@ export default class App extends React.Component {
     }
 
     renderItem({item}) {
-        return <TouchableNativeFeedback onPress={() => {
+        return <TouchableHighlight onPress={() => {
             navigation.navigate('Knowledge', {
                 title: item.name,
                 data: item.children,
@@ -95,7 +95,7 @@ export default class App extends React.Component {
                     })}
                 </View>
             </View>
-        </TouchableNativeFeedback>
+        </TouchableHighlight>
     }
 }
 

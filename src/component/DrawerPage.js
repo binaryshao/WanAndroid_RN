@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,ScrollView, Image, Text, TouchableNativeFeedback, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {View,ScrollView, Image, Text, TouchableHighlight, StyleSheet, DeviceEventEmitter} from 'react-native';
 import * as config from "../config"
 import HintUtils from "../utils/HintUtils";
 import AccountUtils from "../utils/AccountUtils";
@@ -36,7 +36,7 @@ export default class App extends React.Component {
 
     render() {
         return <ScrollView>
-            <TouchableNativeFeedback onPress={() => {
+            <TouchableHighlight onPress={() => {
                 if (this.state.userName) {
                     HintUtils.toast('你好...' + this.state.userName)
                 } else {
@@ -49,7 +49,7 @@ export default class App extends React.Component {
                         {this.state.userName ? this.state.userName : "还没有登录..."}
                     </Text>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableHighlight>
             {this.getItemView("收藏夹", require('../../res/ic_favorite_not.png'), () => {
                 if (this.state.userName) {
                     this.props.navigation.navigate('Favorite');
@@ -81,14 +81,14 @@ export default class App extends React.Component {
     }
 
     getItemView(action, image, onPress) {
-        return <TouchableNativeFeedback onPress={onPress}>
+        return <TouchableHighlight onPress={onPress}>
             <View style={styles.itemView}>
                 <Image style={styles.actionImage} source={image}/>
                 <Text style={styles.action}>
                     {action}
                 </Text>
             </View>
-        </TouchableNativeFeedback>
+        </TouchableHighlight>
     }
 
     async logout() {

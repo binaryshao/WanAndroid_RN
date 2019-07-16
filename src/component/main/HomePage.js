@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Text, View, Image, Platform, StyleSheet,
-    TouchableNativeFeedback, SafeAreaView, StatusBar, DeviceEventEmitter
+    TouchableHighlight, SafeAreaView, StatusBar, DeviceEventEmitter
 } from 'react-native';
 import {UltimateListView} from "react-native-ultimate-listview";
 import Swiper from 'react-native-swiper';
@@ -162,7 +162,7 @@ export default class App extends React.Component {
                         onTouchEnd={() => this.swiper.autoplay()}
                     >
                         {
-                            this.state.bannerData.map((value, i) => <TouchableNativeFeedback
+                            this.state.bannerData.map((value, i) => <TouchableHighlight
                                 key={'index' + i}
                                 onPress={() => {
                                     this.props.navigation.navigate('Web', {
@@ -171,7 +171,7 @@ export default class App extends React.Component {
                                     })
                                 }}>
                                 <Image resizeMode='stretch' style={{flex: 1}} source={{uri: value.imagePath}}/>
-                            </TouchableNativeFeedback>)
+                            </TouchableHighlight>)
                         }
                     </Swiper>
                     <View style={styles.bannerHint}>

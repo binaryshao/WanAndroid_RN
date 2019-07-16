@@ -3,7 +3,7 @@ import {
     View,
     Text,
     FlatList,
-    TouchableNativeFeedback,
+    TouchableHighlight,
     TouchableWithoutFeedback,
     Image, StyleSheet, RefreshControl, DeviceEventEmitter
 } from 'react-native';
@@ -151,7 +151,7 @@ export default class App extends React.Component {
     }
 
     renderItem = ({item}) => {
-        return <TouchableNativeFeedback onPress={() => {
+        return <TouchableHighlight onPress={() => {
             this.editTodo(false, item);
         }}>
             <View style={styles.itemContainer}>
@@ -186,7 +186,7 @@ export default class App extends React.Component {
                     </TouchableWithoutFeedback>
                 </View>
             </View>
-        </TouchableNativeFeedback>
+        </TouchableHighlight>
     };
 
     loadMore() {
