@@ -26,6 +26,7 @@ const Main = createDrawerNavigator(
     {
         drawerWidth: 250,
         drawerPosition: "left",
+        drawerType: 'slide',
         contentComponent: DrawerPage,
         drawerLockMode: "locked-open",
         initialRouteName: 'home',

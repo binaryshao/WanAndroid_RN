@@ -9,23 +9,26 @@ class App extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         showBack: PropTypes.bool,
+        leftView: PropTypes.element,
         rightView: PropTypes.element,
         onBack: PropTypes.func,
     };
 
     render() {
+        const {title, showBack, leftView, rightView, onBack} = this.props;
         return <View style={styles.container}>
-            {this.props.showBack ? <TouchableWithoutFeedback onPress={this.goBack.bind(this)}>
+            {leftView ? leftView : null}
+            {showBack ? <TouchableWithoutFeedback onPress={this.goBack.bind(this)}>
                 <Image source={require('../../res/ic_back.png')}
                        style={styles.back}
                        resizeMode='cover'/>
             </TouchableWithoutFeedback> : null}
-            <Text style={[styles.title, {marginLeft: this.props.showBack ? 40 : 20,}]}
+            <Text style={[styles.title, {marginLeft: (showBack || leftView) ? 35 : 20,}]}
                   numberOfLines={1}
                   ellipsizeMode={'tail'}>
-                {this.props.title}
+                {title}
             </Text>
-            {this.props.rightView ? this.props.rightView : null}
+            {rightView ? rightView : null}
         </View>;
     }
 

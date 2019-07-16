@@ -8,6 +8,15 @@ class App extends React.Component {
     render() {
         return <HeaderBar
             title={this.props.title}
+            leftView={
+                <TouchableWithoutFeedback
+                    onPress={() => this.props.navigation.toggleDrawer()}>
+                    <Image
+                        source={require('../../res/ic_drawer.png')}
+                        style={{height: 18, width: 18, marginLeft: 20,}}
+                    />
+                </TouchableWithoutFeedback>
+            }
             rightView={
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
                     <TouchableWithoutFeedback
