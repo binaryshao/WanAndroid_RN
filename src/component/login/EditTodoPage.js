@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     View, Text, Image, TextInput, TouchableOpacity,
-    StyleSheet, DeviceEventEmitter, ScrollView, Switch
+    StyleSheet, DeviceEventEmitter, ScrollView, Switch, Platform
 } from 'react-native';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import HintUtils from "../../utils/HintUtils";
@@ -76,9 +76,12 @@ export default class App extends React.Component {
                         clearButtonMode={'always'}
                         multiline={true}
                         style={[styles.input, {
-                            height: 100,
                             textAlign: 'left',
                             textAlignVertical: 'center',
+                            ...Platform.select({
+                                ios: {},
+                                android: {height: 100}
+                            }),
                         }]}
                     />
                 </View>
