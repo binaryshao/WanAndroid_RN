@@ -10,3 +10,5 @@ export const NO_DATA = "暂无数据 o(╥﹏╥)o";
 export const CLICK4RETRY = "点击重试";
 export const PAGE_COUNT = 20;
 export const SCREEN_WIDTH = Dimensions.get('window').width;
+export const iosPaddingTop = 20;
+

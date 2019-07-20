@@ -1,5 +1,14 @@
 import React from 'react';
-import {View,ScrollView, Image, Text, TouchableHighlight, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {
+    View,
+    ScrollView,
+    Image,
+    Text,
+    TouchableHighlight,
+    StyleSheet,
+    DeviceEventEmitter,
+    Platform
+} from 'react-native';
 import * as config from "../config"
 import HintUtils from "../utils/HintUtils";
 import AccountUtils from "../utils/AccountUtils";
@@ -104,14 +113,18 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     header: {
         backgroundColor: config.colorPrimary,
-        height: 150,
+        height: Platform.OS === 'ios' ? 150 + config.iosPaddingTop : 150,
         justifyContent: 'center',
         alignItems: 'center',
+        ...Platform.select({
+            ios: {paddingTop: config.iosPaddingTop},
+            android: {}
+        })
     },
     avatar: {
         width: 90,
         height: 90,
-        borderRadius: 90,
+        borderRadius: 45,
         borderWidth: 2,
         borderColor: 'white',
     },

@@ -45,14 +45,13 @@ class App extends React.Component {
     }
 }
 
-const iosPaddingTop = 20;
 const styles = StyleSheet.create({
     container: {
-        height: Platform.OS === 'ios' ? 50 + iosPaddingTop : 50,
+        height: Platform.OS === 'ios' ? 50 + config.iosPaddingTop : 50,
         flexDirection: 'row',
         alignItems: 'stretch',
         backgroundColor: config.colorPrimary,
-        paddingTop: Platform.OS === 'ios' ? iosPaddingTop : 0,
+        paddingTop: Platform.OS === 'ios' ? config.iosPaddingTop : 0,
     },
     back: {
         height: 15,
