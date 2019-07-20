@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, TouchableWithoutFeedback, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableWithoutFeedback, StyleSheet, Platform} from 'react-native';
 import * as config from "../config";
 import {withNavigation} from 'react-navigation';
 import PropTypes from "prop-types";
@@ -25,11 +25,13 @@ class App extends React.Component {
                            resizeMode='cover'/>
                 </View>
             </TouchableWithoutFeedback> : null}
-            <Text style={[styles.title, {marginLeft: (showBack || leftView) ? 35 : 20,}]}
-                  numberOfLines={1}
-                  ellipsizeMode={'tail'}>
-                {title}
-            </Text>
+            <View style={{justifyContent: 'center', marginLeft: (showBack || leftView) ? 35 : 20,}}>
+                <Text style={[styles.title]}
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}>
+                    {title}
+                </Text>
+            </View>
             {rightView ? rightView : null}
         </View>;
     }
@@ -43,12 +45,14 @@ class App extends React.Component {
     }
 }
 
+const iosPaddingTop = 20;
 const styles = StyleSheet.create({
     container: {
-        height: 55,
+        height: Platform.OS === 'ios' ? 50 + iosPaddingTop : 50,
         flexDirection: 'row',
         alignItems: 'stretch',
         backgroundColor: config.colorPrimary,
+        paddingTop: Platform.OS === 'ios' ? iosPaddingTop : 0,
     },
     back: {
         height: 15,

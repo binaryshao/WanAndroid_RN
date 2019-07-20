@@ -52,7 +52,7 @@ export default class App extends React.Component {
     }
 
     renderData() {
-        return <SafeAreaView style={{flex: 1}}>
+        return <View style={{flex: 1}}>
             <StatusBar
                 barStyle="light-content"
                 backgroundColor={config.colorPrimaryDark}
@@ -76,7 +76,7 @@ export default class App extends React.Component {
                 refreshableTitleRefreshing={config.REFRESHING}
                 refreshableMode={Platform.OS === "ios" ? "advanced" : "basic"}
             />
-        </SafeAreaView>
+        </View>
     }
 
     retry() {
