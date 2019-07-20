@@ -1,4 +1,4 @@
-# WanAndroid-RN
+# WanAndroid_RN
 玩 Android 客户端，可以查看各种开发相关的知识，采用 React-Native 开发，适配了 Android 和 iOS，内容比较完整
 
 封装了加载中、空数据、错误、到达最底部等不同状态的视图，在错误时可以点击重新加载，具有较好的用户体验
