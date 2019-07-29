@@ -1,5 +1,5 @@
 # WanAndroid_RN
-玩 Android 客户端，可以查看各种开发相关的知识，采用 React-Native 开发，适配了 Android 和 iOS，内容比较完整
+玩安卓客户端 React-Native 版，可以查看各种开发相关的知识，适配了 Android 和 iOS，内容比较完整
 
 封装了加载中、空数据、错误、到达最底部等不同状态的视图，在错误时可以点击重新加载，具有较好的用户体验
 
@@ -21,18 +21,10 @@
 
 ### 效果图
 #### Android
-<img src="./screenshot/android/1.png" width=250 height=400> <img src="./screenshot/android/2.png" width=250 height=400> <img src="./screenshot/android/3.png" width=250 height=400>
-<img src="./screenshot/android/4.png" width=250 height=400> <img src="./screenshot/android/5.png" width=250 height=400> <img src="./screenshot/android/6.png" width=250 height=400>
-<img src="./screenshot/android/7.png" width=250 height=400> <img src="./screenshot/android/8.png" width=250 height=400> <img src="./screenshot/android/9.png" width=250 height=400>
-<img src="./screenshot/android/10.png" width=250 height=400> <img src="./screenshot/android/11.png" width=250 height=400> <img src="./screenshot/android/12.png" width=250 height=400>
-<img src="./screenshot/android/13.png" width=250 height=400>
+<img src="./screenshot/android.png">
 
-### iOS
-<img src="./screenshot/ios/1.png" width=250 height=400> <img src="./screenshot/ios/2.png" width=250 height=400> <img src="./screenshot/ios/3.png" width=250 height=400>
-<img src="./screenshot/ios/4.png" width=250 height=400> <img src="./screenshot/ios/5.png" width=250 height=400> <img src="./screenshot/ios/6.png" width=250 height=400>
-<img src="./screenshot/ios/7.png" width=250 height=400> <img src="./screenshot/ios/8.png" width=250 height=400> <img src="./screenshot/ios/9.png" width=250 height=400>
-<img src="./screenshot/ios/10.png" width=250 height=400> <img src="./screenshot/ios/11.png" width=250 height=400> <img src="./screenshot/ios/12.png" width=250 height=400>
-<img src="./screenshot/ios/13.png" width=250 height=400> <img src="./screenshot/ios/14.png" width=250 height=400>
+#### iOS
+<img src="./screenshot/ios.png">
 
 ### 用到的开源库
 - react-navigation：界面跳转、创建抽屉布局、创建 Tab 页，创建 HeaderBar（返回按钮、标题、右侧视图）
