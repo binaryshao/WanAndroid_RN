@@ -37,7 +37,7 @@ export default class App extends React.Component {
                 {this.getLink("鸿神提供的数据源", 'https://www.wanandroid.com/blog/show/2')}
 
                 <Text style={styles.title}>项目地址</Text>
-                {this.getLink("GitHub", 'https://github.com/Sbingo/WanAndroid_RN')}
+                {this.getLink("玩安卓-RN", 'https://github.com/binaryshao/WanAndroid_RN')}
                 {this.getContent("如果觉得项目还不错，点个 star 鼓励下作者吧 o(╥﹏╥)o")}
                 {this.getContent("也欢迎大家发起 issue 或提交 PR")}
             </View>
